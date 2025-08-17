@@ -1,0 +1,372 @@
+/* Bento Grid Styles */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 16px;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .bento-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 20rem;
+  }
+}
+
+.bento-grid-item {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  padding: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
+}
+
+.bento-grid-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border-color: #667eea;
+}
+
+/* Grid column spans */
+.md\:col-span-1 {
+  grid-column: span 1;
+}
+
+@media (min-width: 768px) {
+  .md\:col-span-2 {
+    grid-column: span 2;
+  }
+  
+  .md\:col-span-3 {
+    grid-column: span 3;
+  }
+}
+
+/* Bento content */
+.bento-content {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.bento-icon {
+  margin-bottom: 8px;
+  color: #667eea;
+}
+
+.bento-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+
+.bento-description {
+  color: #64748b;
+  line-height: 1.5;
+}
+
+/* Skeleton animations and backgrounds */
+.skeleton-container {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  min-height: 6rem;
+  display: flex;
+  position: relative;
+}
+
+.skeleton-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(circle, #e5e7eb 1px, transparent 1px);
+  background-size: 15px 15px;
+  opacity: 0.3;
+  border-radius: 8px;
+}
+
+/* Flex utilities */
+.flex {
+  display: flex;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.min-h-24 {
+  min-height: 6rem;
+}
+
+.space-y-2 > * + * {
+  margin-top: 8px;
+}
+
+.space-x-2 > * + * {
+  margin-left: 8px;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.items-start {
+  align-items: flex-start;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+/* Rounded corners */
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.rounded-2xl {
+  border-radius: 16px;
+}
+
+.rounded-lg {
+  border-radius: 8px;
+}
+
+/* Borders */
+.border {
+  border-width: 1px;
+}
+
+.border-neutral-100 {
+  border-color: #f5f5f5;
+}
+
+/* Padding */
+.p-2 {
+  padding: 8px;
+}
+
+.p-4 {
+  padding: 16px;
+}
+
+/* Backgrounds */
+.bg-white {
+  background-color: white;
+}
+
+.bg-gray-100 {
+  background-color: #f3f4f6;
+}
+
+.bg-neutral-100 {
+  background-color: #f5f5f5;
+}
+
+.bg-green-100 {
+  background-color: #dcfce7;
+}
+
+.bg-red-100 {
+  background-color: #fee2e2;
+}
+
+.bg-orange-100 {
+  background-color: #fed7aa;
+}
+
+/* Gradients */
+.bg-gradient-to-r {
+  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+}
+
+.from-pink-500 {
+  --tw-gradient-from: #ec4899;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(236, 72, 153, 0));
+}
+
+.to-violet-500 {
+  --tw-gradient-to: #8b5cf6;
+}
+
+/* Dimensions */
+.h-4 {
+  height: 16px;
+}
+
+.h-6 {
+  height: 24px;
+}
+
+.h-10 {
+  height: 40px;
+}
+
+.w-4 {
+  width: 16px;
+}
+
+.w-6 {
+  width: 24px;
+}
+
+.w-10 {
+  width: 40px;
+}
+
+.w-1\/3 {
+  width: 33.333333%;
+}
+
+.w-3\/4 {
+  width: 75%;
+}
+
+/* Margins */
+.ml-auto {
+  margin-left: auto;
+}
+
+.mt-4 {
+  margin-top: 16px;
+}
+
+/* Flex shrink */
+.shrink-0 {
+  flex-shrink: 0;
+}
+
+/* Text styles */
+.text-xs {
+  font-size: 0.75rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.text-neutral-500 {
+  color: #737373;
+}
+
+.text-green-600 {
+  color: #16a34a;
+}
+
+.text-red-600 {
+  color: #dc2626;
+}
+
+.text-orange-600 {
+  color: #ea580c;
+}
+
+/* Borders for badges */
+.border-green-500 {
+  border-color: #22c55e;
+}
+
+.border-red-500 {
+  border-color: #ef4444;
+}
+
+.border-orange-500 {
+  border-color: #f97316;
+}
+
+/* Padding for badges */
+.px-2 {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.py-0\.5 {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+/* Z-index */
+.z-20 {
+  z-index: 20;
+}
+
+.relative {
+  position: relative;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .bento-grid-item {
+    background: #1e293b;
+    border-color: #334155;
+  }
+  
+  .bento-grid-item:hover {
+    border-color: #667eea;
+  }
+  
+  .bento-title {
+    color: #f8fafc;
+  }
+  
+  .bento-description {
+    color: #94a3b8;
+  }
+  
+  .bg-white {
+    background-color: #0f172a;
+  }
+  
+  .bg-gray-100 {
+    background-color: #1e293b;
+  }
+  
+  .bg-neutral-100 {
+    background-color: #1e293b;
+  }
+  
+  .border-neutral-100 {
+    border-color: #334155;
+  }
+  
+  .text-neutral-500 {
+    color: #94a3b8;
+  }
+}

@@ -1,0 +1,494 @@
+.export-page {
+  min-height: calc(100vh - 80px);
+  background: #f8fafc;
+  padding: 100px 0 24px;
+}
+
+.export-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header */
+.export-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
+  gap: 24px;
+}
+
+.header-content {
+  flex: 1;
+}
+
+.page-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 12px;
+}
+
+.page-subtitle {
+  font-size: 1.125rem;
+  color: #64748b;
+  line-height: 1.6;
+  max-width: 600px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+/* Main Content */
+.export-content {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 32px;
+}
+
+/* Export Panel */
+.export-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 16px;
+}
+
+/* Completion Card */
+.completion-progress {
+  margin-bottom: 20px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  transition: width 0.3s ease;
+  border-radius: 4px;
+}
+
+.progress-text {
+  font-size: 0.875rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.completion-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.completion-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.completion-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.completion-item.complete .completion-icon {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.completion-item.incomplete .completion-icon {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.completion-icon svg {
+  width: 12px;
+  height: 12px;
+}
+
+.completion-label {
+  font-size: 0.875rem;
+  color: #374151;
+  font-weight: 500;
+}
+
+.completion-item.complete .completion-label {
+  color: #16a34a;
+}
+
+.completion-item.incomplete .completion-label {
+  color: #d97706;
+}
+
+/* Resume Info Card */
+.resume-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  font-weight: 500;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+.detail-value {
+  font-weight: 500;
+  color: #1e293b;
+  font-size: 0.875rem;
+}
+
+.template-name {
+  color: #667eea;
+  text-transform: capitalize;
+}
+
+/* Export Options */
+.export-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.export-btn {
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  text-align: left;
+}
+
+.export-btn:hover:not(:disabled) {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+  transform: translateY(-2px);
+}
+
+.export-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.pdf-btn:hover:not(:disabled) {
+  border-color: #dc2626;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15);
+}
+
+.word-btn:hover:not(:disabled) {
+  border-color: #2563eb;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+}
+
+.btn-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.btn-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pdf-btn .btn-icon-wrapper {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.word-btn .btn-icon-wrapper {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.btn-icon-wrapper svg {
+  width: 24px;
+  height: 24px;
+}
+
+.btn-text {
+  flex: 1;
+}
+
+.btn-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 4px;
+}
+
+.btn-description {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Export Status */
+.export-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.export-status.success {
+  background: #dcfce7;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}
+
+.export-status.error {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.export-status.info {
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #dbeafe;
+}
+
+.status-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.status-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Tips Card */
+.tips-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tips-list li {
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #374151;
+}
+
+.tips-list li strong {
+  color: #1e293b;
+}
+
+/* Preview Panel */
+.preview-panel {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.preview-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.preview-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-sm {
+  padding: 8px 16px;
+  font-size: 14px;
+  min-height: 36px;
+}
+
+.btn-outline {
+  background: transparent;
+  color: #667eea;
+  border: 2px solid #667eea;
+}
+
+.btn-outline:hover {
+  background: #667eea;
+  color: white;
+}
+
+.preview-container {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  max-height: calc(100vh - 200px);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .export-content {
+    grid-template-columns: 350px 1fr;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .export-content {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .preview-panel {
+    order: -1;
+  }
+  
+  .preview-container {
+    max-height: 600px;
+  }
+}
+
+@media (max-width: 768px) {
+  .export-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  
+  .page-title {
+    font-size: 2rem;
+  }
+  
+  .export-panel {
+    gap: 20px;
+  }
+  
+  .card {
+    padding: 20px;
+  }
+  
+  .btn-content {
+    gap: 12px;
+  }
+  
+  .btn-icon-wrapper {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .btn-icon-wrapper svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .preview-container {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .export-page {
+    padding: 16px 0;
+  }
+  
+  .export-container {
+    padding: 0 16px;
+  }
+  
+  .page-title {
+    font-size: 1.75rem;
+  }
+  
+  .card {
+    padding: 16px;
+  }
+  
+  .export-btn {
+    padding: 16px;
+  }
+  
+  .btn-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+  
+  .completion-details {
+    gap: 6px;
+  }
+  
+  .completion-item {
+    padding: 6px 0;
+  }
+}

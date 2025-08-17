@@ -1,0 +1,341 @@
+/* BentoGrid Demo Animations and Styles */
+
+/* Skeleton One - Real-time Preview */
+.animated-item {
+  animation: slideIn 0.6s ease-out forwards;
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.animated-item.delay-1 {
+  animation-delay: 0.2s;
+}
+
+.animated-item.delay-2 {
+  animation-delay: 0.4s;
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.resume-line {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-radius: 9999px;
+  border: 1px solid #f5f5f5;
+  background: white;
+  gap: 8px;
+  transition: transform 0.2s ease;
+}
+
+.resume-line:hover {
+  transform: scale(1.02);
+}
+
+.profile-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.content-bar {
+  width: 100%;
+  height: 16px;
+  border-radius: 9999px;
+}
+
+/* Skeleton Two - ATS Optimization */
+.progress-bar {
+  height: 16px;
+  background: linear-gradient(90deg, #f3f4f6, #e5e7eb);
+  border-radius: 9999px;
+  border: 1px solid #f5f5f5;
+  animation: progressFill 2s ease-in-out infinite;
+  background-size: 200% 100%;
+}
+
+@keyframes progressFill {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Skeleton Three - Smart Auto-Save */
+.gradient-animation {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  background: linear-gradient(-45deg, #667eea, #764ba2, #667eea, #764ba2);
+  background-size: 400% 400%;
+  animation: gradientShift 3s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Skeleton Four - Professional Templates */
+.template-card {
+  width: 33.333333%;
+  height: 100%;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.template-card:hover {
+  transform: scale(1.05) rotate(-2deg);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
+.template-card.active {
+  border-color: #667eea;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+.template-header {
+  width: 100%;
+  padding: 8px;
+  border-bottom: 1px solid #f1f5f9;
+  margin-bottom: 8px;
+}
+
+.template-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.template-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #cbd5e1;
+}
+
+.template-content {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.template-line {
+  height: 8px;
+  background: #f1f5f9;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.template-line.short {
+  width: 60%;
+}
+
+.template-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.template-badge.modern {
+  background: #eef2ff;
+  color: #667eea;
+}
+
+.template-badge.classic {
+  background: #f0fdf4;
+  color: #16a34a;
+}
+
+.template-badge.minimal {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+/* Skeleton Five - Export Formats */
+.export-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid #f5f5f5;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.export-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.export-item.docx {
+  flex-direction: row-reverse;
+  margin-left: auto;
+  width: 75%;
+}
+
+.export-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.export-icon.pdf {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.export-icon.docx {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.export-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.export-text {
+  flex: 1;
+}
+
+/* Hover animations for bento items */
+.bento-grid-item:hover .animated-item {
+  animation: pulse 0.6s ease-in-out;
+}
+
+.bento-grid-item:hover .progress-bar {
+  animation-duration: 1s;
+}
+
+.bento-grid-item:hover .gradient-animation {
+  animation-duration: 2s;
+}
+
+.bento-grid-item:hover .template-card:not(.active) {
+  transform: scale(0.95) rotate(1deg);
+}
+
+.bento-grid-item:hover .template-card.active {
+  transform: scale(1.1) rotate(-1deg);
+}
+
+.bento-grid-item:hover .export-item {
+  transform: translateX(8px);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .template-card {
+    padding: 8px;
+  }
+  
+  .template-badge {
+    font-size: 0.6rem;
+    padding: 2px 6px;
+  }
+  
+  .export-icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .export-icon svg {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .export-item {
+    padding: 8px;
+    gap: 8px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .resume-line {
+    background: #0f172a;
+    border-color: #334155;
+  }
+  
+  .content-bar {
+    background: #1e293b;
+  }
+  
+  .progress-bar {
+    background: linear-gradient(90deg, #1e293b, #334155);
+    border-color: #334155;
+  }
+  
+  .template-card {
+    background: #0f172a;
+    border-color: #334155;
+  }
+  
+  .template-header {
+    border-bottom-color: #334155;
+  }
+  
+  .template-dots span {
+    background: #475569;
+  }
+  
+  .template-line {
+    background: #334155;
+  }
+  
+  .export-item {
+    background: #0f172a;
+    border-color: #334155;
+  }
+  
+  .export-icon.pdf {
+    background: rgba(220, 38, 38, 0.1);
+  }
+  
+  .export-icon.docx {
+    background: rgba(37, 99, 235, 0.1);
+  }
+}

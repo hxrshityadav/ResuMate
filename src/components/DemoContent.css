@@ -1,0 +1,144 @@
+.demo-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 20px;
+}
+
+.demo-title {
+  font-size: 3rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 16px;
+  color: #1e293b;
+}
+
+.demo-subtitle {
+  font-size: 1.125rem;
+  text-align: center;
+  margin-bottom: 40px;
+  color: #64748b;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.highlight {
+  color: #667eea;
+  font-weight: 600;
+}
+
+.demo-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .demo-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.demo-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.demo-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.15);
+}
+
+.box-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-align: center;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Grid column spans */
+.md\:col-span-1 {
+  grid-column: span 1;
+}
+
+@media (min-width: 768px) {
+  .md\:col-span-2 {
+    grid-column: span 2;
+  }
+  
+  .md\:col-span-3 {
+    grid-column: span 3;
+  }
+}
+
+/* Heights */
+.h-60 {
+  height: 240px;
+}
+
+/* Background gradients */
+.bg-gradient-1 {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.bg-gradient-2 {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.bg-gradient-3 {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.bg-gradient-4 {
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+}
+
+.bg-gradient-5 {
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+}
+
+.bg-gradient-6 {
+  background: linear-gradient(135deg, #ff8a80 0%, #ea80fc 100%);
+}
+
+.bg-gradient-7 {
+  background: linear-gradient(135deg, #8fd3f4 0%, #84fab0 100%);
+}
+
+.bg-gradient-8 {
+  background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+}
+
+.bg-gradient-9 {
+  background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+}
+
+.bg-gradient-10 {
+  background: linear-gradient(135deg, #fdbb2d 0%, #22c1c3 100%);
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .demo-title {
+    font-size: 2rem;
+  }
+  
+  .demo-subtitle {
+    font-size: 1rem;
+  }
+  
+  .demo-box {
+    height: 200px;
+    padding: 20px;
+  }
+  
+  .box-title {
+    font-size: 1.125rem;
+  }
+}

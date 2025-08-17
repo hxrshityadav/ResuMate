@@ -1,0 +1,408 @@
+.resume-preview {
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.resume-template {
+  width: 100%;
+  min-height: 800px;
+  background: white;
+  padding: 40px;
+  font-family: 'Arial', sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+}
+
+/* Modern Template */
+.modern-template {
+  font-family: 'Inter', 'Arial', sans-serif;
+}
+
+.modern-template .resume-header {
+  border-bottom: 2px solid #667eea;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+}
+
+.modern-template .resume-name {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 10px;
+}
+
+.modern-template .contact-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.modern-template .section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #667eea;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 5px;
+}
+
+.modern-template .experience-header,
+.modern-template .education-header,
+.modern-template .project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 5px;
+}
+
+.modern-template .job-title,
+.modern-template .degree-title,
+.modern-template .project-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.modern-template .job-date,
+.modern-template .graduation-date,
+.modern-template .project-date {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.modern-template .company-info,
+.modern-template .institution-info {
+  margin-bottom: 10px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.modern-template .company-name,
+.modern-template .institution-name {
+  font-weight: 500;
+  color: #374151;
+}
+
+/* Classic Template */
+.classic-template {
+  font-family: 'Times New Roman', serif;
+  line-height: 1.3;
+}
+
+.classic-template .resume-header {
+  text-align: center;
+  border-bottom: 2px solid #000;
+  padding-bottom: 15px;
+  margin-bottom: 25px;
+}
+
+.classic-template .resume-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.classic-template .contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: #000;
+  font-size: 12px;
+}
+
+.classic-template .section-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #000;
+  padding-bottom: 3px;
+}
+
+.classic-template .job-title,
+.classic-template .degree-title,
+.classic-template .project-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 3px;
+}
+
+.classic-template .company-line,
+.classic-template .institution-line,
+.classic-template .project-meta {
+  font-size: 12px;
+  color: #000;
+  margin-bottom: 8px;
+}
+
+.classic-template .company-name,
+.classic-template .institution-name {
+  font-style: italic;
+}
+
+/* Minimal Template */
+.minimal-template {
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.minimal-template .resume-header {
+  margin-bottom: 25px;
+}
+
+.minimal-template .resume-name {
+  font-size: 24px;
+  font-weight: 300;
+  color: #000;
+  margin-bottom: 8px;
+}
+
+.minimal-template .contact-info {
+  color: #666;
+  font-size: 12px;
+}
+
+.minimal-template .section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.minimal-template .item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 5px;
+}
+
+.minimal-template .job-title,
+.minimal-template .degree-title,
+.minimal-template .project-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+}
+
+.minimal-template .job-date,
+.minimal-template .graduation-date,
+.minimal-template .project-date {
+  font-size: 12px;
+  color: #666;
+}
+
+.minimal-template .skills-text {
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Common Styles */
+.resume-section {
+  margin-bottom: 25px;
+}
+
+.summary-text {
+  color: #333;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+.experience-item,
+.education-item,
+.project-item {
+  margin-bottom: 18px;
+}
+
+.experience-item:last-child,
+.education-item:last-child,
+.project-item:last-child {
+  margin-bottom: 0;
+}
+
+.job-description,
+.education-description,
+.project-description {
+  margin-top: 8px;
+  color: #333;
+}
+
+.job-description p,
+.education-description,
+.project-description {
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+
+.job-description p:last-child {
+  margin-bottom: 0;
+}
+
+.skills-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skill-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.skill-category {
+  font-weight: 600;
+  color: #374151;
+  min-width: 120px;
+}
+
+.skill-list {
+  flex: 1;
+  margin: 0;
+  color: #333;
+}
+
+.project-technologies {
+  font-style: italic;
+  color: #64748b;
+  margin-bottom: 5px;
+}
+
+.project-links {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.project-links > * {
+  margin-right: 15px;
+}
+
+.gpa {
+  font-size: 12px;
+  color: #64748b;
+  margin-bottom: 5px;
+}
+
+/* Print Styles */
+@media print {
+  .resume-preview {
+    box-shadow: none;
+    border-radius: 0;
+  }
+  
+  .resume-template {
+    padding: 20px;
+    font-size: 12px;
+    min-height: auto;
+  }
+  
+  .modern-template .resume-name {
+    font-size: 22px;
+  }
+  
+  .classic-template .resume-name {
+    font-size: 20px;
+  }
+  
+  .minimal-template .resume-name {
+    font-size: 20px;
+  }
+  
+  .section-title {
+    font-size: 13px;
+  }
+  
+  .job-title,
+  .degree-title,
+  .project-title {
+    font-size: 13px;
+  }
+  
+  .experience-item,
+  .education-item,
+  .project-item {
+    margin-bottom: 15px;
+    page-break-inside: avoid;
+  }
+  
+  .resume-section {
+    margin-bottom: 20px;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .resume-template {
+    padding: 20px;
+    font-size: 13px;
+  }
+  
+  .modern-template .resume-name,
+  .classic-template .resume-name,
+  .minimal-template .resume-name {
+    font-size: 22px;
+  }
+  
+  .modern-template .experience-header,
+  .modern-template .education-header,
+  .modern-template .project-header,
+  .minimal-template .item-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+  }
+  
+  .modern-template .contact-info {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .skill-group {
+    flex-direction: column;
+    gap: 3px;
+  }
+  
+  .skill-category {
+    min-width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .resume-template {
+    padding: 16px;
+    font-size: 12px;
+  }
+  
+  .modern-template .resume-name,
+  .classic-template .resume-name,
+  .minimal-template .resume-name {
+    font-size: 20px;
+  }
+  
+  .section-title {
+    font-size: 13px;
+  }
+  
+  .job-title,
+  .degree-title,
+  .project-title {
+    font-size: 13px;
+  }
+}
