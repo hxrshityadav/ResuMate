@@ -1,6 +1,7 @@
 .landing-page {
   min-height: 100vh;
-  background: #ffffff;
+  background: var(--bg-primary);
+  transition: background-color 0.3s ease;
 }
 
 /* Header */
@@ -11,8 +12,13 @@
   right: 0;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--border-primary);
   z-index: 100;
+  transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .landing-header {
+  background: rgba(15, 23, 42, 0.95);
 }
 
 .landing-nav {
@@ -54,12 +60,12 @@
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 24px;
-  color: #1e293b;
+  color: var(--text-primary);
 }
 
 .hero-subtitle {
   font-size: 1.25rem;
-  color: #64748b;
+  color: var(--text-secondary);
   margin-bottom: 32px;
   line-height: 1.6;
 }
@@ -154,7 +160,8 @@
 /* Features Section */
 .features-section {
   padding: 80px 0;
-  background: white;
+  background: var(--bg-primary);
+  transition: background-color 0.3s ease;
 }
 
 .section-header {
@@ -165,13 +172,13 @@
 .section-title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #1e293b;
+  color: var(--text-primary);
   margin-bottom: 16px;
 }
 
 .section-subtitle {
   font-size: 1.25rem;
-  color: #64748b;
+  color: var(--text-secondary);
   max-width: 600px;
   margin: 0 auto;
 }
@@ -252,9 +259,14 @@
 
 /* Footer */
 .landing-footer {
-  background: #1e293b;
-  color: white;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
   padding: 40px 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+[data-theme="dark"] .landing-footer {
+  background: var(--bg-secondary);
 }
 
 .footer-content {
@@ -268,7 +280,7 @@
 }
 
 .footer-text {
-  color: #94a3b8;
+  color: var(--text-tertiary);
 }
 
 /* Responsive Design */

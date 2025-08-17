@@ -11,6 +11,7 @@ import {
   MobileNavToggle,
   MobileNavMenu,
 } from './ui/resizable-navbar';
+import ThemeToggle from './ThemeToggle';
 import './ModernNavbar.css';
 
 const ModernNavbar = () => {
@@ -59,6 +60,7 @@ const ModernNavbar = () => {
         <NavbarLogo />
         <NavItems items={navItems} />
         <div className="flex items-center gap-4">
+          <ThemeToggle />
           {user ? (
             <>
               <div className="user-info-desktop">
@@ -125,6 +127,11 @@ const ModernNavbar = () => {
               <span className="block">{item.name}</span>
             </Link>
           ))}
+
+          {/* Theme Toggle for Mobile */}
+          <div className="mobile-theme-toggle">
+            <ThemeToggle />
+          </div>
 
           {/* Action Buttons */}
           <div className="flex w-full flex-col gap-4">

@@ -1,0 +1,198 @@
+.theme-toggle {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.05);
+}
+
+.toggle-container {
+  position: relative;
+  width: 64px;
+  height: 32px;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  border-radius: 50px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover .toggle-container {
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Dark mode background */
+[data-theme="dark"] .toggle-container {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+}
+
+.toggle-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px;
+}
+
+.background-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.background-icon svg {
+  width: 14px;
+  height: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.sun-bg {
+  opacity: 1;
+}
+
+[data-theme="dark"] .sun-bg {
+  opacity: 0.3;
+}
+
+.moon-bg {
+  opacity: 0.3;
+}
+
+[data-theme="dark"] .moon-bg {
+  opacity: 1;
+}
+
+/* Toggle Slider */
+.toggle-slider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 28px;
+  height: 28px;
+  background: white;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+.toggle-slider.dark {
+  transform: translateX(32px);
+  background: #1e293b;
+}
+
+.toggle-slider.light {
+  transform: translateX(0);
+  background: white;
+}
+
+/* Toggle Icon */
+.toggle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  transition: all 0.3s ease;
+}
+
+.sun-icon {
+  color: #f59e0b;
+  animation: rotate 0.3s ease;
+}
+
+.moon-icon {
+  color: #94a3b8;
+  animation: rotate 0.3s ease;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(-180deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .toggle-container {
+    width: 56px;
+    height: 28px;
+  }
+  
+  .toggle-slider {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .toggle-slider.dark {
+    transform: translateX(28px);
+  }
+  
+  .icon {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .background-icon svg {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+/* Focus styles for accessibility */
+.theme-toggle:focus {
+  outline: none;
+}
+
+.theme-toggle:focus .toggle-container {
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.3);
+}
+
+/* Additional hover effects */
+.theme-toggle:hover .toggle-slider {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.theme-toggle:active .toggle-slider {
+  transform: scale(0.95) translateX(var(--translate-x));
+}
+
+.toggle-slider.light:active {
+  --translate-x: 0;
+}
+
+.toggle-slider.dark:active {
+  --translate-x: 32px;
+}
+
+@media (max-width: 768px) {
+  .toggle-slider.dark:active {
+    --translate-x: 28px;
+  }
+}

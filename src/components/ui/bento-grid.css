@@ -16,9 +16,9 @@
 
 .bento-grid-item {
   position: relative;
-  background: white;
+  background: var(--bg-primary);
   border-radius: 16px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-primary);
   padding: 16px;
   overflow: hidden;
   transition: all 0.3s ease;
@@ -30,8 +30,8 @@
 
 .bento-grid-item:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  border-color: #667eea;
+  box-shadow: 0 20px 40px var(--shadow-medium);
+  border-color: var(--accent-primary);
 }
 
 /* Grid column spans */
@@ -57,18 +57,18 @@
 
 .bento-icon {
   margin-bottom: 8px;
-  color: #667eea;
+  color: var(--accent-primary);
 }
 
 .bento-title {
   font-size: 1.125rem;
   font-weight: 600;
-  color: #1e293b;
+  color: var(--text-primary);
   margin-bottom: 8px;
 }
 
 .bento-description {
-  color: #64748b;
+  color: var(--text-secondary);
   line-height: 1.5;
 }
 

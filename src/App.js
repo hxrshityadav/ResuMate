@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ResumeProvider } from './context/ResumeContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 // Import pages
 import LandingPage from './pages/LandingPage';
@@ -17,8 +18,9 @@ import AuthGuard from './components/AuthGuard';
 
 function App() {
   return (
-    <ResumeProvider>
-      <Router>
+    <ThemeProvider>
+      <ResumeProvider>
+        <Router>
         <div className="App">
           <Routes>
             {/* Public pages without navbar */}
@@ -53,8 +55,9 @@ function App() {
             } />
           </Routes>
         </div>
-      </Router>
-    </ResumeProvider>
+        </Router>
+      </ResumeProvider>
+    </ThemeProvider>
   );
 }
 

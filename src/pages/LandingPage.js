@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { BentoGridDemo } from '../components/BentoGridDemo';
+import ThemeToggle from '../components/ThemeToggle';
 import './LandingPage.css';
 
 const LandingPage = () => {
@@ -73,6 +74,7 @@ const LandingPage = () => {
               <span className="logo-accent">Mate</span>
             </div>
             <div className="nav-actions">
+              <ThemeToggle />
               <Link to="/signin" className="btn btn-outline">
                 Sign In
               </Link>

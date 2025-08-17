@@ -89,6 +89,15 @@
   flex-direction: column;
 }
 
+/* Mobile Theme Toggle */
+.mobile-theme-toggle {
+  display: flex;
+  justify-content: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border-primary);
+  margin-bottom: 16px;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .user-info-desktop {
