@@ -1,7 +1,7 @@
 package com.resumate.backend.controller;
 
-import com.resumate.backend.ResumeRequest;
-import com.resumate.backend.service.ResumeService;
+import com.resumate.backend.Service.ResumeRequest;
+import com.resumate.backend.Service.ResumeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/Resume-Backend/src/main/java/com/resumate/backend/controller/ResumeController.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/Resume-Backend/src/main/java/com/resumate/backend/controller/ResumeController.java" />
+              <option name="originalContent" value="package com.resumate.backend.controller;&#10;&#10;import com.resumate.backend.Service.ResumeRequest;&#10;import com.resumate.backend.Service.ResumeService;&#10;import org.springframework.http.HttpStatus;&#10;import org.springframework.http.ResponseEntity;&#10;import org.springframework.web.bind.annotation.*;&#10;&#10;import java.io.IOException;&#10;import java.util.Map;&#10;&#10;@RestController&#10;@CrossOrigin(&quot;*&quot;)&#10;@RequestMapping(&quot;/api/v1/resume&quot;)&#10;public class ResumeController {&#10;&#10;    private ResumeService resumeService;&#10;&#10;    public ResumeController(ResumeService resumeService) {&#10;        this.resumeService = resumeService;&#10;    }&#10;&#10;&#10;    @PostMapping(&quot;/generate&quot;)&#10;    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; getResumeData(&#10;            @RequestBody ResumeRequest resumeRequest&#10;    ) throws IOException {&#10;&#10;        Map&lt;String, Object&gt; stringObjectMap = resumeService.generateResumeResponse(resumeRequest.userDescription());&#10;        return new ResponseEntity&lt;&gt;(stringObjectMap, HttpStatus.OK);&#10;&#10;    }&#10;&#10;&#10;}" />
+              <option name="updatedContent" value="package com.resumate.backend.controller;&#10;&#10;import com.resumate.backend.Service.ResumeRequest;&#10;import com.resumate.backend.Service.ResumeService;&#10;import org.springframework.http.HttpStatus;&#10;import org.springframework.http.ResponseEntity;&#10;import org.springframework.web.bind.annotation.*;&#10;&#10;import java.io.IOException;&#10;import java.util.Map;&#10;&#10;@RestController&#10;@CrossOrigin(&quot;*&quot;)&#10;@RequestMapping(&quot;/api/v1/resume&quot;)&#10;public class ResumeController {&#10;&#10;    private ResumeService resumeService;&#10;&#10;    public ResumeController(ResumeService resumeService) {&#10;        this.resumeService = resumeService;&#10;    }&#10;&#10;&#10;    @PostMapping(&quot;/generate&quot;)&#10;    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; getResumeData(&#10;            @RequestBody ResumeRequest resumeRequest&#10;    ) throws IOException {&#10;&#10;        Map&lt;String, Object&gt; stringObjectMap = resumeService.generateResumeResponse(resumeRequest.userDescription());&#10;        return new ResponseEntity&lt;&gt;(stringObjectMap, HttpStatus.OK);&#10;&#10;    }&#10;&#10;&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

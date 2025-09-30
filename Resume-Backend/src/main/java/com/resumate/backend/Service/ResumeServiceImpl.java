@@ -32,9 +32,7 @@ public class ResumeServiceImpl implements ResumeService {
         Prompt prompt = new Prompt(promptContent);
         String response = chatClient.prompt(prompt).call().content();
 
-
-        //modify:
-        return stringObjectMap;
+        return parseMultipleResponses(response);
     }
 
     String loadPromptFromFile(String filename) throws IOException {
