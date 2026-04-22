@@ -1,0 +1,147 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS custom properties ──────────────────────────────────── */
+:root {
+  /* Light theme (default) */
+  --bg:        #ffffff;
+  --bg2:       #f8fafc;
+  --bg3:       #f1f5f9;
+  --bg4:       #e2e8f0;
+  --nav-bg:    rgba(255, 255, 255, 0.85);
+  --nav-border:rgba(0, 0, 0, 0.07);
+  --border:    rgba(0, 0, 0, 0.08);
+  --border2:   rgba(0, 0, 0, 0.05);
+  --text:      #0f172a;
+  --text2:     #475569;
+  --text3:     #94a3b8;
+  --shadow:    0 4px 32px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 48px rgba(0, 0, 0, 0.12);
+  --card-bg:   #ffffff;
+
+  /* Tailwind semantic tokens (light) */
+  --background:      0 0% 100%;
+  --foreground:      222 47% 11%;
+  --card:            0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --popover:         0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --primary:         262 83% 58%;
+  --primary-foreground: 210 40% 98%;
+  --secondary:       210 40% 96%;
+  --secondary-foreground: 222 47% 11%;
+  --muted:           210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+  --accent:          210 40% 96%;
+  --accent-foreground: 222 47% 11%;
+  --border:          214 32% 91%;
+  --input:           214 32% 91%;
+  --ring:            262 83% 58%;
+  --radius:          1rem;
+}
+
+.dark {
+  /* Dark theme */
+  --bg:        #080810;
+  --bg2:       #0f0f14;
+  --bg3:       #0c0c14;
+  --bg4:       #161620;
+  --nav-bg:    rgba(12, 12, 20, 0.90);
+  --nav-border:rgba(255, 255, 255, 0.07);
+  --border:    rgba(255, 255, 255, 0.06);
+  --border2:   rgba(255, 255, 255, 0.04);
+  --text:      #ffffff;
+  --text2:     #a1a1aa;
+  --text3:     #52525b;
+  --shadow:    0 4px 32px rgba(0, 0, 0, 0.50);
+  --shadow-lg: 0 8px 48px rgba(0, 0, 0, 0.70);
+  --card-bg:   #0f0f18;
+
+  /* Tailwind semantic tokens (dark) */
+  --background:      240 10% 4%;
+  --foreground:      210 40% 98%;
+  --card:            240 8% 8%;
+  --card-foreground: 210 40% 98%;
+  --popover:         240 8% 8%;
+  --popover-foreground: 210 40% 98%;
+  --primary:         262 83% 66%;
+  --primary-foreground: 210 40% 98%;
+  --secondary:       240 6% 14%;
+  --secondary-foreground: 210 40% 98%;
+  --muted:           240 6% 14%;
+  --muted-foreground: 215 20% 70%;
+  --accent:          240 6% 14%;
+  --accent-foreground: 210 40% 98%;
+  --border:          240 6% 18%;
+  --input:           240 6% 18%;
+  --ring:            262 83% 66%;
+}
+
+/* ─── Base styles ─────────────────────────────────────────────── */
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html,
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  body {
+    @apply antialiased;
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  }
+}
+
+/* ─── Utility classes using CSS variables ─────────────────────── */
+@layer utilities {
+  .bg-app       { background-color: var(--bg); }
+  .bg-app2      { background-color: var(--bg2); }
+  .bg-app3      { background-color: var(--bg3); }
+  .bg-app4      { background-color: var(--bg4); }
+  .bg-app-card  { background-color: var(--card-bg); }
+  .text-app     { color: var(--text); }
+  .text-app2    { color: var(--text2); }
+  .text-app3    { color: var(--text3); }
+  .border-app   { border-color: var(--border); }
+  .border-app2  { border-color: var(--border2); }
+  .shadow-app   { box-shadow: var(--shadow); }
+  .shadow-app-lg{ box-shadow: var(--shadow-lg); }
+}
+
+/* ─── Light mode overrides for pages that use hardcoded dark colors ── */
+html:not(.dark) .page-root {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+html:not(.dark) .dark-card {
+  background-color: #ffffff;
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+html:not(.dark) .dark-sidebar {
+  background-color: #f8fafc;
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+/* Smooth theme transitions for key properties */
+* {
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-duration: 200ms;
+  transition-timing-function: ease;
+}
+
+/* Don't animate everything (too slow for interactive elements) */
+button, a, input, textarea, select, [role="button"] {
+  transition-property: all;
+  transition-duration: 150ms;
+}

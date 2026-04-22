@@ -1,0 +1,12 @@
+target/
+*.class
+*.jar
+*.jar.original
+
+# Local environment overrides — never commit
+application-local.properties
+.env
+
+# IDE
+.idea/
+*.iml
