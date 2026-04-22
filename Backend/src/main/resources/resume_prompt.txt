@@ -1,0 +1,81 @@
+Generate ONLY valid JSON for a professional IT resume using the user description below.
+
+USER DESCRIPTION:
+{{userDescription}}
+
+RULES:
+1. Return ONLY raw JSON.
+2. No markdown.
+3. No explanation.
+4. Use exact key names below.
+5. If missing text use "".
+6. If missing arrays use [].
+7. Keep structure exact.
+8. Make professional realistic content based on user description.
+
+{
+  "personalInformation": {
+    "fullName": "",
+    "email": "",
+    "phoneNumber": "",
+    "location": "",
+    "LinkedIn": "",
+    "GitHub": "",
+    "portfolio": ""
+  },
+  "summary": "",
+  "skills": [
+    { "title": "", "level": "" }
+  ],
+  "experience": [
+    {
+      "jobTitle": "",
+      "company": "",
+      "location": "",
+      "duration": "",
+      "responsibility": ""
+    }
+  ],
+  "education": [
+    {
+      "degree": "",
+      "university": "",
+      "location": "",
+      "graduationYear": ""
+    }
+  ],
+  "certifications": [
+    {
+      "title": "",
+      "issuingOrganization": "",
+      "year": ""
+    }
+  ],
+  "projects": [
+    {
+      "title": "",
+      "description": "",
+      "technologiesUsed": [],
+      "githubLink": ""
+    }
+  ],
+  "achievements": [
+    {
+      "title": "",
+      "year": "",
+      "extraInformation": ""
+    }
+  ],
+  "languages": [
+    {
+      "id": 1,
+      "name": ""
+    }
+  ],
+  "interests": [
+    {
+      "id": 1,
+      "name": ""
+    }
+  ]
+}
