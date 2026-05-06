@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const baseURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
+export const baseURL = import.meta.env.VITE_BACKEND_URL || "https://resumate-olive.up.railway.app/";
 
 export const axiosInstance = axios.create({
     baseURL,
