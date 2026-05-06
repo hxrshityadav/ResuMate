@@ -6,6 +6,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,8 +25,8 @@ public class ResumeServiceimpl implements ResumeService {
     private final ObjectMapper mapper = new ObjectMapper();
 
     /**
-     * Call Gemini with up to 4 retries on transient errors (503 overload, connection resets).
-     * Backs off: 2s → 4s → 8s between attempts.
+     * Call Gemini with up to 4 retries on transient errors (429 rate limit, 503 overload, connection resets).
+     * Backs off: 15s → 30s → 60s for 429; 2s → 4s → 8s for 5xx/connection errors.
      */
     private String callGemini(Map<String, Object> body) throws Exception {
         HttpHeaders headers = new HttpHeaders();
@@ -38,6 +39,14 @@ public class ResumeServiceimpl implements ResumeService {
         for (int attempt = 1; attempt <= maxAttempts; attempt++) {
             try {
                 return restTemplate.postForObject(url + "?key=" + apiKey, entity, String.class);
+            } catch (HttpClientErrorException e) {
+                if (e.getStatusCode().value() == 429) {
+                    // Rate limited — back off longer before retrying
+                    lastEx = e;
+                    if (attempt < maxAttempts) Thread.sleep(15000L * attempt);
+                } else {
+                    throw e; // 4xx other than 429 are not retryable
+                }
             } catch (HttpServerErrorException e) {
                 // Retry on 5xx (503 overload, 500, etc.)
                 lastEx = e;
