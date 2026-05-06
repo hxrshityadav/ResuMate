@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect, useLayoutEffect } from "react";
 import axios from "axios";
+import { axiosInstance } from "../api/ResumeService";
 import HarvardClassic from "../templates/HarvardClassic";
 import AcademicClean from "../templates/AcademicClean";
 import SidebarPro from "../templates/SidebarPro";
@@ -224,7 +225,7 @@ function Create() {
         setAiImproving(key);
         const toastId = toast.loading("✨ AI improving…");
         try {
-            const res = await axios.post("http://localhost:8080/api/v1/resume/improve-section", {
+            const res = await axiosInstance.post("/api/v1/resume/improve-section", {
                 sectionType,
                 content: typeof content === "string" ? content : JSON.stringify(content),
             });
@@ -275,7 +276,7 @@ function Create() {
         try {
             setLoading(true);
             toast.loading("Generating your resume…");
-            const res = await axios.post("http://localhost:8080/api/v1/resume/generate", { userDescription: prompt });
+            const res = await axiosInstance.post("/api/v1/resume/generate", { userDescription: prompt });
             const data = res.data;
             const safeSkills = Array.isArray(data.skills)
                 ? data.skills.map((item) => (typeof item === "object" ? item.title || item.name || "" : item))

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useLayoutEffect, useCallback } from "react";
 import axios from "axios";
+import { axiosInstance } from "../api/ResumeService";
 import { extractPdfText as extractPdf } from "../utils/extractPdfText";
 import { toPng } from "html-to-image";
 import { jsPDF } from "jspdf";
@@ -322,7 +323,7 @@ export default function TargetResume() {
         setAiImproving(key);
         const toastId = toast.loading("✨ AI improving…");
         try {
-            const res = await axios.post("http://localhost:8080/api/v1/resume/improve-section", {
+            const res = await axiosInstance.post("/api/v1/resume/improve-section", {
                 sectionType,
                 content: typeof content === "string" ? content : JSON.stringify(content),
             });
@@ -393,7 +394,7 @@ export default function TargetResume() {
         setAtsResult(null);
         const toastId = toast.loading("🎯 Tailoring your resume to the job…");
         try {
-            const res = await axios.post("http://localhost:8080/api/v1/resume/target-resume", {
+            const res = await axiosInstance.post("/api/v1/resume/target-resume", {
                 resumeText: resumeText.trim(),
                 jobDescription,
                 targetRole,
@@ -419,7 +420,7 @@ export default function TargetResume() {
                 data.skills?.join(", "),
                 data.experience?.map(e => `${e.title} ${e.company} ${e.points?.join(" ")}`).join(" "),
             ].filter(Boolean).join("\n");
-            const res = await axios.post("http://localhost:8080/api/v1/resume/ats-check", {
+            const res = await axiosInstance.post("/api/v1/resume/ats-check", {
                 resumeText,
                 jobDescription: jd,
             });
