@@ -21,12 +21,12 @@ function Toggle({ checked, onChange }) {
     );
 }
 
-function SettingSection({ icon: Icon, color, title, subtitle, children }) {
+function SettingSection({ icon: ICON, color, title, subtitle, children }) {
     return (
         <div className="rounded-2xl border border-white/[0.06] bg-white/[0.03] overflow-hidden">
             <div className="flex items-center gap-3 px-5 py-4 border-b border-white/[0.04]">
                 <div className={`h-8 w-8 rounded-lg ${color} flex items-center justify-center`}>
-                    <Icon className="h-4 w-4" />
+                    {React.createElement(ICON, { className: "h-4 w-4" })}
                 </div>
                 <div>
                     <p className="text-sm font-semibold text-white">{title}</p>
@@ -79,7 +79,7 @@ export default function Settings() {
     return (
         <div className="space-y-6 max-w-2xl">
             <div>
-                <h1 className="text-2xl lg:text-3xl font-bold text-white">Settings</h1>
+                <h1 className="resumate-page-title text-3xl lg:text-4xl">Settings</h1>
                 <p className="text-zinc-500 text-sm mt-1">Manage your preferences and account</p>
             </div>
 
@@ -100,14 +100,14 @@ export default function Settings() {
                 <div>
                     <p className="text-sm text-zinc-400 mb-3">Theme</p>
                     <div className="grid grid-cols-3 gap-2">
-                        {THEMES.map(({ id, icon: Icon, label }) => (
+                        {THEMES.map(({ id, icon: ICON, label }) => (
                             <button key={id} onClick={() => setTheme(id)}
                                 className={`flex flex-col items-center gap-2 p-3 rounded-xl border transition-all ${
                                     theme === id
                                         ? "border-violet-500/50 bg-violet-500/10 text-violet-300"
                                         : "border-white/[0.06] bg-white/[0.02] text-zinc-500 hover:border-white/[0.12] hover:text-zinc-300"
                                 }`}>
-                                <Icon className="h-4 w-4" />
+                                {React.createElement(ICON, { className: "h-4 w-4" })}
                                 <span className="text-xs font-medium">{label}</span>
                                 {theme === id && <Check className="h-3 w-3 text-violet-400" />}
                             </button>

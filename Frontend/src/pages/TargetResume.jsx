@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect, useLayoutEffect, useCallback } from "react";
-import axios from "axios";
 import { axiosInstance } from "../api/ResumeService";
 import { extractPdfText as extractPdf } from "../utils/extractPdfText";
 import { toPng } from "html-to-image";
@@ -333,7 +332,7 @@ export default function TargetResume() {
         } catch (err) {
             let msg = "AI improve failed. Try again.";
             if (err?.response?.status === 404 || err?.code === "ERR_NETWORK") msg = "Backend not running — start Spring Boot on port 8080.";
-            else if (err?.response?.status === 503) msg = "Gemini overloaded — wait a few seconds and retry.";
+            else if (err?.response?.status === 503) msg = "The AI service is busy — wait a few seconds and retry.";
             else if (err.message?.includes("429")) msg = "Rate limit reached — wait a minute and retry.";
             toast.error(msg, { id: toastId, duration: 6000 });
         } finally {
@@ -583,13 +582,13 @@ export default function TargetResume() {
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] flex flex-col transition-colors duration-300">
 
             {/* ── Top header bar ── */}
-            <div className="border-b border-[var(--border)] bg-[var(--bg2)] px-6 py-4 flex items-center justify-between gap-4 sticky top-0 z-30 mt-[72px]">
+            <div className="border-b border-[var(--border)] bg-[var(--bg2)] px-6 py-4 flex items-center justify-between gap-4 sticky top-0 z-30 mt-[88px]">
                 <div className="flex items-center gap-3">
                     <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/25">
                         <Target className="h-4.5 w-4.5 text-white" style={{ height: 18, width: 18 }} />
                     </div>
                     <div>
-                        <h1 className="font-bold text-[var(--text)] text-lg leading-tight">Target Resume Builder</h1>
+                        <h1 className="resumate-page-title text-[var(--text)] text-2xl leading-tight">Target Resume Builder</h1>
                         <p className="text-xs text-[var(--text3)]">AI tailors your resume for a specific job</p>
                     </div>
                 </div>
@@ -924,7 +923,7 @@ export default function TargetResume() {
                                 <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 border border-violet-500/20 flex items-center justify-center mb-5">
                                     <Target className="h-9 w-9 text-violet-400" />
                                 </div>
-                                <h2 className="text-xl font-bold text-[var(--text)] mb-2">Your Targeted Resume</h2>
+                                <h2 className="resumate-page-title text-2xl text-[var(--text)] mb-2">Your Targeted Resume</h2>
                                 <p className="text-sm text-[var(--text2)] leading-relaxed mb-6">
                                     Upload your resume, set the target role, paste the job description, and click Generate.
                                 </p>

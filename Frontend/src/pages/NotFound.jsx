@@ -6,7 +6,7 @@ import { useTheme } from "../context/ThemeContext";
 export default function NotFound() {
     const { isDark } = useTheme();
     return (
-        <div className={`min-h-screen flex flex-col items-center justify-center px-4 text-center transition-colors duration-300 ${isDark ? "bg-[#080810] text-white" : "bg-white text-slate-900"}`}>
+        <div className="resumate-shell min-h-screen flex flex-col items-center justify-center px-4 text-center transition-colors duration-300">
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
                 <div className={`absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-[120px] ${isDark ? "bg-violet-600/10" : "bg-violet-200/40"}`} />
             </div>
@@ -20,7 +20,7 @@ export default function NotFound() {
                         <Sparkles className="h-6 w-6 text-white" />
                     </div>
                 </div>
-                <h1 className="text-3xl sm:text-4xl font-black mb-3">Page not found</h1>
+                <h1 className="resumate-page-title text-4xl sm:text-5xl mb-3">Page not found</h1>
                 <p className={`text-base max-w-sm mx-auto mb-10 leading-relaxed ${isDark ? "text-zinc-400" : "text-slate-500"}`}>
                     Looks like this page doesn't exist or was moved. Let's get you back on track.
                 </p>

@@ -12,8 +12,17 @@ import {
     EyeOff,
     Loader2,
     ArrowRight,
+    FileText,
+    ShieldCheck,
+    Bot,
 } from "lucide-react";
 import toast from "react-hot-toast";
+
+const FEATURES = [
+    { icon: Bot, label: "AI-generated resumes in seconds" },
+    { icon: ShieldCheck, label: "ATS score checker built-in" },
+    { icon: FileText, label: "4 recruiter-approved templates" },
+];
 
 export default function Login() {
     const { user } = useAuth();
@@ -73,76 +82,99 @@ export default function Login() {
         }
     };
 
-    const bg   = isDark ? "bg-zinc-950" : "bg-white";
-    const text = isDark ? "text-white"  : "text-slate-900";
-    const text2= isDark ? "text-zinc-400" : "text-slate-500";
-    const side = isDark ? "bg-gradient-to-br from-violet-600/20 via-zinc-900 to-fuchsia-600/10 border-white/10" : "bg-gradient-to-br from-violet-50 via-white to-fuchsia-50/50 border-black/[0.07]";
-    const inputCls = isDark
-        ? "bg-zinc-900 border-white/10 placeholder-zinc-600 focus:border-violet-500/60 focus:ring-violet-500/30"
-        : "bg-slate-50 border-black/10 placeholder-slate-400 focus:border-violet-400 focus:ring-violet-400/20";
-    const statCard = isDark ? "bg-white/5 border-white/10" : "bg-violet-50/80 border-violet-100";
+    const inputCls = "bg-[var(--bg3)] border-[var(--border)] placeholder:text-[var(--text3)] focus:border-violet-500/60 focus:ring-violet-500/20 text-[var(--text)]";
+
+    const text = "text-[var(--text)]";
+    const text2 = "text-[var(--text2)]";
+    const text3 = "text-[var(--text3)]";
+    const divider = "bg-[var(--border)]";
 
     return (
-        <div className={`min-h-screen ${bg} ${text} flex transition-colors duration-300`}>
-            {/* Left — branding */}
-            <div className={`hidden lg:flex flex-col justify-between w-[45%] border-r p-12 ${side}`}>
-                <Link to="/" className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-2xl bg-violet-500/20 flex items-center justify-center">
-                        <Sparkles className="h-5 w-5 text-violet-400" />
-                    </div>
-                    <span className="text-xl font-bold">ResuMate</span>
-                </Link>
+        <div className="resumate-shell min-h-screen flex bg-[var(--bg)] text-[var(--text)] transition-colors duration-300">
+            {/* ── Left panel — branding & features ─────────── */}
+            <div className="hidden lg:flex flex-col justify-between w-[45%] border-r border-[var(--border)] bg-[var(--bg2)] relative overflow-hidden">
+                {/* Dot grid background */}
+                <div className={`absolute inset-0 bg-dot-grid opacity-[0.03] ${isDark ? "text-white" : "text-black"}`} />
 
-                <div className="space-y-6">
-                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-400 text-xs font-medium">
-                        <Sparkles className="h-3.5 w-3.5" />
-                        AI-Powered Resume Builder
-                    </div>
-                    <h2 className="text-4xl font-bold leading-tight">
-                        Build resumes that<br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400">
-                            beat the ATS
-                        </span>
-                    </h2>
-                    <p className="text-zinc-400 text-lg leading-relaxed">
-                        Generate professional resumes in seconds with AI, check your ATS score,
-                        and land more interviews.
-                    </p>
+                {/* Subtle glow */}
+                <div className={`absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full blur-[120px] ${
+                    isDark ? "bg-violet-600/8" : "bg-violet-300/20"
+                }`} />
 
-                    <div className="grid grid-cols-2 gap-4 pt-4">
-                        {[
-                            { label: "Resumes Generated", value: "5K+" },
-                            { label: "Avg ATS Score", value: "92%" },
-                            { label: "Templates", value: "4" },
-                            { label: "AI-Powered", value: "100%" },
-                        ].map((stat) => (
-                            <div key={stat.label} className={`rounded-2xl p-4 border ${statCard}`}>
-                                <p className={`text-2xl font-bold ${text}`}>{stat.value}</p>
-                                <p className={`text-xs mt-1 ${text2}`}>{stat.label}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                <p className="text-zinc-600 text-sm">© 2026 ResuMate. All rights reserved.</p>
-            </div>
-
-            {/* Right — form */}
-            <div className={`flex-1 flex items-center justify-center p-6 ${isDark ? "" : "bg-white"}`}>
-                <div className="w-full max-w-md space-y-8">
-                    {/* Mobile logo */}
-                    <Link to="/" className="flex lg:hidden items-center gap-3 justify-center">
-                        <div className="h-9 w-9 rounded-xl bg-violet-500/20 flex items-center justify-center">
-                            <Sparkles className="h-4 w-4 text-violet-400" />
+                <div className="relative z-10 p-10 flex flex-col justify-between h-full">
+                    {/* Logo */}
+                    <Link to="/" className="flex items-center gap-2.5">
+                        <div className={`grid h-10 w-10 rotate-3 place-items-center rounded-[14px] ${isDark ? "bg-[#f6efe3] text-[#10141a]" : "bg-[#25241f] text-[#f7f1e5]"}`}>
+                            <Sparkles className="h-4 w-4" />
                         </div>
-                        <span className="text-lg font-bold">ResuMate</span>
+                        <span className={`atlas-serif text-xl font-semibold tracking-[-0.03em] ${text}`}>ResuMate</span>
                     </Link>
 
+                    {/* Content */}
+                    <div className="space-y-6 max-w-sm">
+                        <h2 className={`resumate-page-title text-4xl leading-tight ${text}`}>
+                            Build resumes that{" "}
+                            <span className="bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-transparent">
+                                land interviews
+                            </span>
+                        </h2>
+                        <p className={`text-sm leading-relaxed ${text2}`}>
+                            Generate professional, ATS-optimized resumes in seconds with AI — then customize and download.
+                        </p>
+
+                        {/* Feature list */}
+                        <div className="space-y-3 pt-2">
+                            {FEATURES.map((f) => {
+                                const Icon = f.icon;
+                                return (
+                                    <div key={f.label} className="flex items-center gap-3">
+                                        <div className={`h-8 w-8 rounded-lg flex items-center justify-center shrink-0 ${
+                                            isDark ? "bg-violet-500/10" : "bg-violet-50"
+                                        }`}>
+                                            <Icon className="h-4 w-4 text-violet-500" />
+                                        </div>
+                                        <span className={`text-sm ${text2}`}>{f.label}</span>
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        {/* Stats row */}
+                        <div className="flex gap-6 pt-4">
+                            {[
+                                { value: "5K+", label: "Resumes" },
+                                { value: "92%", label: "Avg ATS" },
+                                { value: "Free", label: "Forever" },
+                            ].map((s) => (
+                                <div key={s.label}>
+                                    <p className={`text-xl font-bold ${text}`}>{s.value}</p>
+                                    <p className={`text-xs ${text3}`}>{s.label}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <p className={`text-xs ${text3}`}>© 2026 ResuMate. All rights reserved.</p>
+                </div>
+            </div>
+
+            {/* ── Right panel — auth form ─────────────────── */}
+            <div className="flex-1 flex items-center justify-center p-6">
+                <div className="w-full max-w-md space-y-6">
+                    {/* Mobile logo */}
+                    <Link to="/" className="flex lg:hidden items-center gap-2.5 justify-center mb-2">
+                        <div className={`grid h-9 w-9 rotate-3 place-items-center rounded-[13px] ${isDark ? "bg-[#f6efe3] text-[#10141a]" : "bg-[#25241f] text-[#f7f1e5]"}`}>
+                            <Sparkles className="h-4 w-4" />
+                        </div>
+                        <span className={`atlas-serif text-xl font-semibold tracking-[-0.03em] ${text}`}>ResuMate</span>
+                    </Link>
+
+                    {/* Header */}
                     <div className="text-center lg:text-left">
-                        <h1 className="text-3xl font-bold">
+                        <h1 className={`resumate-page-title text-3xl ${text}`}>
                             {tab === "signin" ? "Welcome back" : "Create account"}
                         </h1>
-                        <p className="text-zinc-400 mt-2">
+                        <p className={`text-sm mt-1.5 ${text2}`}>
                             {tab === "signin"
                                 ? "Sign in to access your resumes"
                                 : "Start building your perfect resume"}
@@ -150,14 +182,14 @@ export default function Login() {
                     </div>
 
                     {/* Tabs */}
-                    <div className={`flex gap-1 border p-1 rounded-2xl ${isDark ? "bg-zinc-900 border-white/10" : "bg-slate-100 border-black/[0.07]"}`}>
+                    <div className="flex gap-1 p-1 rounded-xl border bg-[var(--bg3)] border-[var(--border)]">
                         {["signin", "signup"].map((t) => (
                             <button
                                 key={t}
                                 onClick={() => setTab(t)}
-                                className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                                className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all ${
                                     tab === t
-                                        ? "bg-violet-600 text-white shadow-lg shadow-violet-500/30"
+                                        ? "bg-violet-600 text-white shadow-md shadow-violet-500/25"
                                         : isDark ? "text-zinc-400 hover:text-white" : "text-slate-500 hover:text-slate-900"
                                 }`}
                             >
@@ -170,7 +202,11 @@ export default function Login() {
                     <button
                         onClick={handleGoogle}
                         disabled={googleLoading}
-                        className="w-full flex items-center justify-center gap-3 py-3 rounded-2xl bg-white text-zinc-900 font-semibold hover:bg-zinc-100 transition-all disabled:opacity-60"
+                        className={`w-full flex items-center justify-center gap-3 py-3 rounded-xl border font-medium text-sm transition-all hover:-translate-y-px disabled:opacity-60 ${
+                            isDark
+                                ? "bg-white/[0.04] border-white/[0.08] text-zinc-200 hover:bg-white/[0.07]"
+                                : "bg-white border-black/[0.1] text-slate-700 hover:bg-slate-50 shadow-sm"
+                        }`}
                     >
                         {googleLoading ? (
                             <Loader2 className="h-4 w-4 animate-spin" />
@@ -186,9 +222,9 @@ export default function Login() {
                     </button>
 
                     <div className="flex items-center gap-3">
-                        <div className="flex-1 h-px bg-white/10" />
-                        <span className="text-xs text-zinc-500">or continue with email</span>
-                        <div className="flex-1 h-px bg-white/10" />
+                        <div className={`flex-1 h-px ${divider}`} />
+                        <span className={`text-xs ${text3}`}>or continue with email</span>
+                        <div className={`flex-1 h-px ${divider}`} />
                     </div>
 
                     {/* Email/Password form */}
@@ -197,14 +233,14 @@ export default function Login() {
                             <div className="space-y-1.5">
                                 <label className={`text-sm font-medium ${text2}`}>Full Name</label>
                                 <div className="relative">
-                                    <User className={`absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 ${text2}`} />
+                                    <User className={`absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 ${text3}`} />
                                     <input
                                         type="text"
                                         value={fullName}
                                         onChange={(e) => setFullName(e.target.value)}
-                                        placeholder="Harshit Yadav"
+                                        placeholder="Jordan Lee"
                                         required
-                                        className={`w-full pl-11 pr-4 py-3 border rounded-2xl text-sm outline-none focus:ring-1 transition-all ${inputCls}`}
+                                        className={`w-full pl-10 pr-4 py-3 border rounded-xl text-sm outline-none focus:ring-1 transition-all ${inputCls}`}
                                     />
                                 </div>
                             </div>
@@ -213,14 +249,14 @@ export default function Login() {
                         <div className="space-y-1.5">
                             <label className={`text-sm font-medium ${text2}`}>Email</label>
                             <div className="relative">
-                                <Mail className={`absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 ${text2}`} />
+                                <Mail className={`absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 ${text3}`} />
                                 <input
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="you@example.com"
                                     required
-                                    className={`w-full pl-11 pr-4 py-3 border rounded-2xl text-sm outline-none focus:ring-1 transition-all ${inputCls}`}
+                                    className={`w-full pl-10 pr-4 py-3 border rounded-xl text-sm outline-none focus:ring-1 transition-all ${inputCls}`}
                                 />
                             </div>
                         </div>
@@ -228,7 +264,7 @@ export default function Login() {
                         <div className="space-y-1.5">
                             <label className={`text-sm font-medium ${text2}`}>Password</label>
                             <div className="relative">
-                                <Lock className={`absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 ${text2}`} />
+                                <Lock className={`absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 ${text3}`} />
                                 <input
                                     type={showPassword ? "text" : "password"}
                                     value={password}
@@ -236,12 +272,14 @@ export default function Login() {
                                     placeholder="Min. 6 characters"
                                     required
                                     minLength={6}
-                                    className={`w-full pl-11 pr-12 py-3 border rounded-2xl text-sm outline-none focus:ring-1 transition-all ${inputCls}`}
+                                    className={`w-full pl-10 pr-12 py-3 border rounded-xl text-sm outline-none focus:ring-1 transition-all ${inputCls}`}
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 transition-colors"
+                                    className={`absolute right-3.5 top-1/2 -translate-y-1/2 transition-colors ${
+                                        isDark ? "text-zinc-500 hover:text-zinc-300" : "text-slate-400 hover:text-slate-600"
+                                    }`}
                                 >
                                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                                 </button>
@@ -251,7 +289,7 @@ export default function Login() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full py-3.5 rounded-2xl bg-violet-600 hover:bg-violet-500 font-semibold transition-all shadow-lg shadow-violet-500/30 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                            className="w-full py-3 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-semibold text-sm transition-all shadow-md shadow-violet-500/20 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 hover:-translate-y-px"
                         >
                             {loading ? (
                                 <Loader2 className="h-4 w-4 animate-spin" />

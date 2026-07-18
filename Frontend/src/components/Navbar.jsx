@@ -25,9 +25,8 @@ export default function Navbar() {
     const location = useLocation();
     const navigate  = useNavigate();
     const { user, signOut } = useAuth();
-    const { theme, toggle, isDark } = useTheme();
+    const { toggle, isDark } = useTheme();
 
-    if (location.pathname.startsWith("/dashboard")) return null;
 
     const isActive = (path) =>
         path === "/" ? location.pathname === "/" : location.pathname.startsWith(path);
@@ -61,6 +60,8 @@ export default function Navbar() {
 
     useEffect(() => { setMenuOpen(false); setUserMenu(false); }, [location.pathname]);
 
+    if (location.pathname.startsWith("/dashboard")) return null;
+
     const handleLogout = async () => {
         await signOut();
         toast.success("Logged out.");
@@ -70,58 +71,51 @@ export default function Navbar() {
 
     /* ── Computed classes ──────────────────────────────── */
     const navBg = scrolled
-        ? isDark
-            ? "bg-[#0c0c14]/95 border-white/10 shadow-[0_8px_40px_rgba(0,0,0,0.6)]"
-            : "bg-white/95 border-black/10 shadow-[0_8px_40px_rgba(0,0,0,0.12)]"
-        : isDark
-            ? "bg-[#0c0c14]/80 border-white/[0.07]"
-            : "bg-white/80 border-black/[0.06]";
+        ? "bg-[var(--nav-bg)] border-[var(--nav-border)] shadow-[0_14px_40px_rgba(20,18,14,0.12)]"
+        : "bg-[var(--nav-bg)] border-[var(--nav-border)]";
 
-    const textPrimary   = isDark ? "text-white"    : "text-slate-900";
-    const textSecondary = isDark ? "text-zinc-400"  : "text-slate-500";
-    const textHover     = isDark ? "hover:text-white hover:bg-white/[0.06]" : "hover:text-slate-900 hover:bg-black/[0.04]";
-    const pillBg        = isDark ? "bg-white/[0.04] border-white/[0.07]" : "bg-black/[0.03] border-black/[0.07]";
-    const activePill    = isDark ? "bg-white/10 text-white" : "bg-black/[0.06] text-slate-900";
-    const drawerBg      = isDark ? "bg-[#0c0c14]"  : "bg-white";
-    const drawerBorder  = isDark ? "border-white/[0.07]" : "border-black/[0.07]";
+    const textPrimary   = "text-[var(--text)]";
+    const textSecondary = "text-[var(--text2)]";
+    const textHover     = "hover:text-[var(--brand)] hover:bg-[var(--bg3)]";
+    const pillBg        = "bg-[var(--bg3)] border-[var(--nav-border)]";
+    const activePill    = "bg-[var(--brand-soft)] text-[var(--brand)] shadow-sm";
+    const drawerBg      = "bg-[var(--bg2)]";
+    const drawerBorder  = "border-[var(--border)]";
 
     return (
         <>
             {/* ─── Navbar ─── */}
-            <header className={`fixed top-0 inset-x-0 z-50 flex justify-center transition-all duration-500 ${scrolled ? "pt-3" : "pt-5"}`}>
-                <nav className={`w-full max-w-5xl mx-4 flex items-center justify-between px-5 h-[58px] rounded-2xl backdrop-blur-xl border transition-all duration-500 ${navBg}`}>
+            <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-3 transition-all duration-300 sm:px-5">
+                <nav className={`flex h-16 w-full max-w-[1380px] items-center justify-between rounded-[22px] border px-4 backdrop-blur-xl transition-all duration-300 sm:px-5 ${navBg}`}>
 
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-2.5 group shrink-0 select-none">
-                        <div className="relative h-8 w-8 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center shadow-lg shadow-violet-600/40 group-hover:scale-105 transition-all duration-300">
-                            <Sparkles className="h-[15px] w-[15px] text-white" />
-                            <span className="absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full bg-fuchsia-400 border-2 border-white dark:border-[#0c0c14] animate-pulse" />
+                        <div className={`relative grid h-10 w-10 rotate-3 place-items-center rounded-[14px] group-hover:-rotate-3 transition-all duration-300 ${isDark ? "bg-[#f6efe3] text-[#10141a]" : "bg-[#25241f] text-[#f7f1e5]"}`}>
+                            <Sparkles className="h-[17px] w-[17px]" />
                         </div>
-                        <span className={`font-black text-[17px] tracking-tight leading-none ${textPrimary}`}>
-                            Resu<span className="bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-transparent">Mate</span>
+                        <span className={`atlas-serif text-xl font-semibold tracking-[-0.03em] leading-none ${textPrimary}`}>
+                            ResuMate
                         </span>
                     </Link>
 
                     {/* Desktop links — pill includes Dashboard when logged in */}
-                    <div className={`hidden md:flex items-center gap-0.5 border rounded-xl px-1.5 py-1.5 ${pillBg}`}>
+                    <div className={`hidden lg:flex items-center gap-1 rounded-full border p-1 ${pillBg}`}>
                         {NAV_LINKS.filter(({ auth }) => !auth || user).map(({ path, label }) => {
                             const active = isActive(path);
                             return (
                                 <Link key={path} to={path}
-                                    className={`relative px-4 py-1.5 rounded-lg text-[13px] font-semibold transition-all duration-200 ${
+                                    aria-current={active ? "page" : undefined}
+                                    className={`relative rounded-full px-4 py-2 text-[13px] font-semibold transition-all duration-200 ${
                                         active ? activePill : `${textSecondary} ${textHover}`
                                     }`}>
                                     {label}
-                                    {active && (
-                                        <span className="absolute bottom-[3px] left-1/2 -translate-x-1/2 w-4 h-[2px] rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500" />
-                                    )}
                                 </Link>
                             );
                         })}
                     </div>
 
                     {/* Right side */}
-                    <div className="hidden md:flex items-center gap-2">
+                    <div className="hidden lg:flex items-center gap-2">
                         {user ? (
                             <>
                                 {/* Avatar dropdown */}
@@ -162,11 +156,11 @@ export default function Navbar() {
                                                     { to: "/dashboard",          Icon: LayoutDashboard, label: "Dashboard", ic: "text-violet-500 bg-violet-500/10" },
                                                     { to: "/dashboard/profile",  Icon: User,            label: "Profile",   ic: isDark ? "text-zinc-400 bg-white/[0.05]" : "text-slate-500 bg-black/[0.04]" },
                                                     { to: "/dashboard/settings", Icon: Settings,        label: "Settings",  ic: isDark ? "text-zinc-400 bg-white/[0.05]" : "text-slate-500 bg-black/[0.04]" },
-                                                ].map(({ to, Icon, label, ic }) => (
+                                                ].map(({ to, Icon: ICON, label, ic }) => (
                                                     <Link key={to} to={to} onClick={() => setUserMenu(false)}
                                                         className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${textSecondary} ${textHover}`}>
                                                         <div className={`h-7 w-7 rounded-lg ${ic} flex items-center justify-center shrink-0`}>
-                                                            <Icon className="h-3.5 w-3.5" />
+                                                            {React.createElement(ICON, { className: "h-3.5 w-3.5" })}
                                                         </div>
                                                         {label}
                                                     </Link>
@@ -196,15 +190,15 @@ export default function Navbar() {
 
                         {/* CTA */}
                         <Link to="/create"
-                            className="flex items-center gap-2 px-4 py-2 rounded-xl text-[13px] font-bold text-white bg-violet-600 hover:bg-violet-500 transition-all duration-200 hover:-translate-y-px hover:shadow-lg hover:shadow-violet-500/30 active:scale-95">
-                            <FileText className="h-3.5 w-3.5" />
+                            className="flex items-center gap-2 rounded-full bg-[var(--brand)] px-5 py-2.5 text-[13px] font-bold text-white shadow-sm transition-all duration-200 hover:-translate-y-px hover:brightness-105 hover:shadow-lg active:scale-95">
+                            <FileText className="h-4 w-4" />
                             Build Resume
                         </Link>
 
                         {/* Theme toggle — far right */}
                         <button onClick={toggle}
                             aria-label="Toggle theme"
-                            className={`h-9 w-9 rounded-xl flex items-center justify-center transition-all duration-200 border ${
+                            className={`h-10 w-10 rounded-full flex items-center justify-center transition-all duration-200 border ${
                                 isDark
                                     ? "border-white/[0.08] text-zinc-400 hover:text-white hover:bg-white/[0.06]"
                                     : "border-black/[0.08] text-slate-400 hover:text-slate-900 hover:bg-black/[0.05]"
@@ -216,9 +210,12 @@ export default function Navbar() {
                     </div>
 
                     {/* Mobile: hamburger + theme toggle */}
-                    <div className="md:hidden flex items-center gap-2">
-                        <button onClick={() => setMenuOpen((v) => !v)}
-                            className={`h-9 w-9 rounded-xl border flex items-center justify-center transition-all active:scale-95 ${
+                    <div className="flex items-center gap-2 lg:hidden">
+                        <button
+                            onClick={() => setMenuOpen((v) => !v)}
+                            aria-label={menuOpen ? "Close navigation" : "Open navigation"}
+                            aria-expanded={menuOpen}
+                            className={`h-10 w-10 rounded-full border flex items-center justify-center transition-all active:scale-95 ${
                                 isDark
                                     ? "bg-white/[0.05] border-white/[0.08] text-zinc-300 hover:text-white hover:bg-white/10"
                                     : "bg-black/[0.03] border-black/[0.08] text-slate-500 hover:text-slate-900 hover:bg-black/[0.06]"
@@ -226,7 +223,8 @@ export default function Navbar() {
                             {menuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
                         </button>
                         <button onClick={toggle}
-                            className={`h-9 w-9 rounded-xl flex items-center justify-center transition-all border ${
+                            aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+                            className={`h-10 w-10 rounded-full flex items-center justify-center transition-all border ${
                                 isDark
                                     ? "border-white/[0.08] text-zinc-400 hover:text-white bg-white/[0.05]"
                                     : "border-black/[0.08] text-slate-400 hover:text-slate-900 bg-black/[0.03]"
@@ -238,7 +236,7 @@ export default function Navbar() {
             </header>
 
             {/* ─── Mobile Drawer ─── */}
-            <div className={`fixed inset-0 z-40 md:hidden transition-all duration-300 ${menuOpen ? "pointer-events-auto" : "pointer-events-none"}`}>
+            <div className={`fixed inset-0 z-40 transition-all duration-300 lg:hidden ${menuOpen ? "pointer-events-auto" : "pointer-events-none"}`}>
                 <div onClick={() => setMenuOpen(false)}
                     className={`absolute inset-0 backdrop-blur-sm transition-opacity duration-300 ${
                         menuOpen ? "opacity-100" : "opacity-0"
@@ -249,11 +247,11 @@ export default function Navbar() {
                     {/* Header */}
                     <div className={`flex items-center justify-between px-5 py-4 border-b ${drawerBorder}`}>
                         <div className="flex items-center gap-2.5">
-                            <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center">
-                                <Sparkles className="h-[15px] w-[15px] text-white" />
+                            <div className={`grid h-9 w-9 rotate-3 place-items-center rounded-[13px] ${isDark ? "bg-[#f6efe3] text-[#10141a]" : "bg-[#25241f] text-[#f7f1e5]"}`}>
+                                <Sparkles className="h-[15px] w-[15px]" />
                             </div>
-                            <span className={`font-black text-base ${textPrimary}`}>
-                                Resu<span className="text-violet-500">Mate</span>
+                            <span className={`atlas-serif text-lg font-semibold tracking-[-0.03em] ${textPrimary}`}>
+                                ResuMate
                             </span>
                         </div>
                         <button onClick={() => setMenuOpen(false)}
@@ -272,15 +270,13 @@ export default function Navbar() {
                                 <Link key={path} to={path} onClick={() => setMenuOpen(false)}
                                     className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                                         active
-                                            ? isDark
-                                                ? "bg-violet-500/15 text-white border border-violet-500/20"
-                                                : "bg-violet-50 text-violet-700 border border-violet-200"
+                                            ? "border border-[var(--nav-border)] bg-[var(--brand-soft)] text-[var(--brand)]"
                                             : isDark
                                                 ? "text-zinc-400 hover:text-white hover:bg-white/[0.05]"
                                                 : "text-slate-500 hover:text-slate-900 hover:bg-black/[0.04]"
                                     }`}>
                                     {label}
-                                    {active && <span className="h-2 w-2 rounded-full bg-violet-500" />}
+                                    {active && <span className="h-2 w-2 rounded-full bg-[var(--brand)]" />}
                                 </Link>
                             );
                         })}
@@ -291,10 +287,10 @@ export default function Navbar() {
                                 {[
                                     { to: "/dashboard/profile",  Icon: User,     label: "Profile" },
                                     { to: "/dashboard/settings", Icon: Settings, label: "Settings" },
-                                ].map(({ to, Icon, label }) => (
+                                ].map(({ to, Icon: ICON, label }) => (
                                     <Link key={to} to={to} onClick={() => setMenuOpen(false)}
                                         className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${textSecondary} ${textHover}`}>
-                                        <Icon className="h-4 w-4" />
+                                        {React.createElement(ICON, { className: "h-4 w-4" })}
                                         {label}
                                     </Link>
                                 ))}
@@ -305,7 +301,7 @@ export default function Navbar() {
                     {/* Footer */}
                     <div className={`p-3 space-y-2 border-t ${drawerBorder}`}>
                         <Link to="/create" onClick={() => setMenuOpen(false)}
-                            className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-bold text-white bg-violet-600 hover:bg-violet-500 active:scale-[0.98] transition-all">
+                            className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--brand)] py-3 text-sm font-bold text-white transition-all hover:brightness-105 active:scale-[0.98]">
                             <FileText className="h-4 w-4" />
                             Build Resume
                         </Link>

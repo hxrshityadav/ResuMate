@@ -1,8 +1,8 @@
 import React from "react";
-import LandingPage from "./landingPage";
+import CareerAtlasLanding from "../components/career-atlas/CareerAtlasLanding";
 
 function Home() {
-    return <LandingPage />;
+    return <CareerAtlasLanding />;
 }
 
 export default Home;

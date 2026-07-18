@@ -1,5 +1,4 @@
 import React, { useState, useRef, useCallback, useEffect, useLayoutEffect } from "react";
-import axios from "axios";
 import { axiosInstance } from "../api/ResumeService";
 import HarvardClassic from "../templates/HarvardClassic";
 import AcademicClean from "../templates/AcademicClean";
@@ -13,9 +12,9 @@ import {
     FileCode, AlignJustify, X,
 } from "lucide-react";
 import { saveResume } from "../api/resumeApi";
-import { useNavigate } from "react-router-dom";
 import { toPng } from "html-to-image";
 import { jsPDF } from "jspdf";
+import { createSampleResume } from "../data/sampleResume";
 
 /* ── constants ────────────────────────────────────────────── */
 const FONTS = [
@@ -92,7 +91,7 @@ const Accordion = ({ id, label, openEdit, setOpenEdit, children }) => {
 };
 
 /* ── Field ────────────────────────────────────────────────── */
-const inputCls = "w-full bg-zinc-800 border border-white/10 rounded-xl px-3 py-2 text-sm text-zinc-200 outline-none focus:border-violet-500/60 focus:bg-zinc-700/50 transition-all";
+const inputCls = "w-full bg-[var(--bg3)] border border-[var(--border)] rounded-xl px-3 py-2 text-sm text-[var(--text)] outline-none focus:border-violet-500/60 transition-all placeholder:text-[var(--text3)]";
 
 const Field = ({ label, value, onChange, textarea = false, placeholder = "" }) => (
     <div className="space-y-1">
@@ -120,7 +119,6 @@ const AIBtn = ({ onClick, loading }) => (
 /* ─────────────────────────────────────────────────────────── */
 
 function Create() {
-    const navigate = useNavigate();
     const resumeRef = useRef(null);
 
     const [prompt, setPrompt]                   = useState("");
@@ -142,29 +140,7 @@ function Create() {
     const accentKey = ACCENT_PRESETS.find(p => p.hex === accent)?.id ?? "violet";
     const baseFontPx = FONT_SIZES.find(f => f.id === fontSize)?.px ?? 15;
 
-    const [resumeData, setResumeData] = useState({
-        name: "Harshit Yadav",
-        role: "Java Full Stack Developer",
-        location: "Ghaziabad, India",
-        phone: "+91 9876543210",
-        email: "harshit@gmail.com",
-        linkedIn: "",
-        gitHub: "",
-        summary: "Passionate Java Full Stack Developer with expertise in building scalable web applications. Experienced in Spring Boot, React, and cloud technologies.",
-        education: { degree: "B.Tech Computer Science", college: "Your University", year: "2026" },
-        skills: ["Java", "Spring Boot", "React", "MySQL", "Docker", "AWS"],
-        experience: [{
-            title: "Software Developer Intern",
-            company: "ABC Tech",
-            time: "Jan 2025 - Present",
-            points: [
-                "Built scalable REST APIs using Spring Boot",
-                "Developed responsive UI components with React",
-                "Optimized database queries improving performance by 40%",
-            ],
-        }],
-        certifications: [], projects: [], achievements: [], languages: [],
-    });
+    const [resumeData, setResumeData] = useState(() => createSampleResume());
 
     /* ── panel state ── */
     const [editOpen,       setEditOpen]       = useState(true);
@@ -240,9 +216,9 @@ function Create() {
             if (err?.response?.status === 404 || err?.code === "ERR_NETWORK") {
                 msg = "Cannot reach backend — make sure Spring Boot is running on port 8080.";
             } else if (err?.response?.status === 503 || (err.message && err.message.includes("503"))) {
-                msg = "Gemini AI is temporarily overloaded. Please wait a few seconds and try again.";
+                msg = "The AI service is temporarily busy. Please wait a few seconds and try again.";
             } else if (err.message && err.message.includes("429")) {
-                msg = "Gemini API rate limit reached. Please wait a minute and try again.";
+                msg = "The AI request limit was reached. Please wait a minute and try again.";
             } else if (err.message) {
                 msg = err.message.length > 120 ? err.message.substring(0, 120) + "…" : err.message;
             }
@@ -507,16 +483,16 @@ function Create() {
 
     /* ─────────────────────────────────────────────────────── */
     return (
-        <div className="h-screen bg-[var(--bg)] text-[var(--text)] flex flex-col overflow-hidden transition-colors duration-300" style={{paddingTop:"72px"}}>
+        <div className="h-screen bg-[var(--bg)] text-[var(--text)] flex flex-col overflow-hidden transition-colors duration-300" style={{ paddingTop: "88px" }}>
 
             {/* ══ TOP HEADER BAR ══════════════════════════════════════ */}
-            <div className="shrink-0 border-b border-white/[0.06] bg-[#0f0f14] px-5 py-3 flex items-center justify-between gap-4 z-30">
+            <div className="shrink-0 border-b border-[var(--border)] bg-[var(--bg2)] px-5 py-3 flex items-center justify-between gap-4 z-30">
                 <div className="flex items-center gap-3">
                     <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow shadow-violet-500/30">
                         <Sparkles className="h-4 w-4 text-white" />
                     </div>
                     <div>
-                        <h1 className="font-bold text-white text-base leading-tight">AI Resume Builder</h1>
+                        <h1 className="resumate-page-title text-[var(--text)] text-xl leading-tight">AI Resume Builder</h1>
                         <p className="text-[11px] text-zinc-500">Generate, edit and download your resume</p>
                     </div>
                 </div>
@@ -752,7 +728,7 @@ function Create() {
                                 <div className="h-7 w-7 rounded-lg bg-violet-500/10 border border-violet-500/20 flex items-center justify-center shrink-0">
                                     <Edit3 className="h-3.5 w-3.5 text-violet-400" />
                                 </div>
-                                <span className="text-sm font-bold text-white">Edit Resume</span>
+                                <span className="text-sm font-bold text-[var(--text)]">Edit Resume</span>
                                 <span className="text-[10px] text-zinc-600">section by section</span>
                             </div>
                             {editOpen ? <ChevronUp className="h-4 w-4 text-zinc-600" /> : <ChevronDown className="h-4 w-4 text-zinc-600" />}

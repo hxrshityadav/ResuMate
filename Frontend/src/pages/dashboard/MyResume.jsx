@@ -43,7 +43,7 @@ function MyResumes() {
             {/* ── Header ── */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl lg:text-3xl font-bold text-white">My Resumes</h1>
+                    <h1 className="resumate-page-title text-3xl lg:text-4xl">My Resumes</h1>
                     <p className="text-zinc-500 text-sm mt-1">
                         {loading ? "Loading…" : `${resumes.length} resume${resumes.length !== 1 ? "s" : ""} saved`}
                     </p>

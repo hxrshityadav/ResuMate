@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,77 +7,85 @@
 /* ─── CSS custom properties ──────────────────────────────────── */
 :root {
   /* Light theme (default) */
-  --bg:        #ffffff;
-  --bg2:       #f8fafc;
-  --bg3:       #f1f5f9;
-  --bg4:       #e2e8f0;
-  --nav-bg:    rgba(255, 255, 255, 0.85);
-  --nav-border:rgba(0, 0, 0, 0.07);
-  --border:    rgba(0, 0, 0, 0.08);
-  --border2:   rgba(0, 0, 0, 0.05);
-  --text:      #0f172a;
-  --text2:     #475569;
-  --text3:     #94a3b8;
-  --shadow:    0 4px 32px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 8px 48px rgba(0, 0, 0, 0.12);
-  --card-bg:   #ffffff;
+  --bg:        #f3efe6;
+  --bg2:       #fffaf0;
+  --bg3:       #eee7da;
+  --bg4:       #d8cbb6;
+  --nav-bg:    rgba(243, 239, 230, 0.92);
+  --nav-border:rgba(37, 36, 31, 0.12);
+  --border:    rgba(37, 36, 31, 0.14);
+  --border2:   rgba(37, 36, 31, 0.22);
+  --text:      #25241f;
+  --text2:     #5e5a4f;
+  --text3:     #7a7367;
+  --shadow:    0 10px 30px rgba(74, 67, 54, 0.10);
+  --shadow-lg: 16px 18px 0 rgba(74, 67, 54, 0.11);
+  --card-bg:   #fffdf7;
+  --brand:     #df5238;
+  --brand-soft:#f9e6df;
+  --sage:      #708f80;
+  --gold:      #d8a936;
 
   /* Tailwind semantic tokens (light) */
-  --background:      0 0% 100%;
-  --foreground:      222 47% 11%;
-  --card:            0 0% 100%;
-  --card-foreground: 222 47% 11%;
-  --popover:         0 0% 100%;
-  --popover-foreground: 222 47% 11%;
-  --primary:         262 83% 58%;
-  --primary-foreground: 210 40% 98%;
-  --secondary:       210 40% 96%;
-  --secondary-foreground: 222 47% 11%;
-  --muted:           210 40% 96%;
-  --muted-foreground: 215 16% 47%;
-  --accent:          210 40% 96%;
-  --accent-foreground: 222 47% 11%;
-  --border:          214 32% 91%;
-  --input:           214 32% 91%;
-  --ring:            262 83% 58%;
-  --radius:          1rem;
+  --background:      42 35% 93%;
+  --foreground:      50 9% 13%;
+  --card:            42 60% 98%;
+  --card-foreground: 50 9% 13%;
+  --popover:         42 60% 98%;
+  --popover-foreground: 50 9% 13%;
+  --primary:         8 72% 55%;
+  --primary-foreground: 42 60% 98%;
+  --secondary:       39 31% 89%;
+  --secondary-foreground: 50 9% 13%;
+  --muted:           39 31% 89%;
+  --muted-foreground: 39 8% 40%;
+  --accent:          15 70% 93%;
+  --accent-foreground: 8 72% 38%;
+  --border:          39 21% 78%;
+  --input:           39 21% 78%;
+  --ring:            8 72% 55%;
+  --radius:          1.25rem;
 }
 
 .dark {
   /* Dark theme */
-  --bg:        #080810;
-  --bg2:       #0f0f14;
-  --bg3:       #0c0c14;
-  --bg4:       #161620;
-  --nav-bg:    rgba(12, 12, 20, 0.90);
-  --nav-border:rgba(255, 255, 255, 0.07);
-  --border:    rgba(255, 255, 255, 0.06);
-  --border2:   rgba(255, 255, 255, 0.04);
-  --text:      #ffffff;
-  --text2:     #a1a1aa;
-  --text3:     #52525b;
-  --shadow:    0 4px 32px rgba(0, 0, 0, 0.50);
-  --shadow-lg: 0 8px 48px rgba(0, 0, 0, 0.70);
-  --card-bg:   #0f0f18;
+  --bg:        #090a0c;
+  --bg2:       #0f1318;
+  --bg3:       #151c25;
+  --bg4:       #1d2732;
+  --nav-bg:    rgba(9, 10, 12, 0.92);
+  --nav-border:rgba(246, 239, 227, 0.12);
+  --border:    rgba(246, 239, 227, 0.12);
+  --border2:   rgba(246, 239, 227, 0.20);
+  --text:      #f6efe3;
+  --text2:     #cbbca8;
+  --text3:     #8fa0a8;
+  --shadow:    0 12px 32px rgba(0, 0, 0, 0.32);
+  --shadow-lg: 18px 20px 0 rgba(0, 0, 0, 0.40);
+  --card-bg:   #151c25;
+  --brand:     #ff6a3d;
+  --brand-soft:#3a201a;
+  --sage:      #8faea4;
+  --gold:      #f0bf48;
 
   /* Tailwind semantic tokens (dark) */
-  --background:      240 10% 4%;
-  --foreground:      210 40% 98%;
-  --card:            240 8% 8%;
-  --card-foreground: 210 40% 98%;
-  --popover:         240 8% 8%;
-  --popover-foreground: 210 40% 98%;
-  --primary:         262 83% 66%;
-  --primary-foreground: 210 40% 98%;
-  --secondary:       240 6% 14%;
-  --secondary-foreground: 210 40% 98%;
-  --muted:           240 6% 14%;
-  --muted-foreground: 215 20% 70%;
-  --accent:          240 6% 14%;
-  --accent-foreground: 210 40% 98%;
-  --border:          240 6% 18%;
-  --input:           240 6% 18%;
-  --ring:            262 83% 66%;
+  --background:      220 14% 4%;
+  --foreground:      39 47% 93%;
+  --card:            213 28% 11%;
+  --card-foreground: 39 47% 93%;
+  --popover:         213 28% 11%;
+  --popover-foreground: 39 47% 93%;
+  --primary:         14 100% 62%;
+  --primary-foreground: 16 44% 5%;
+  --secondary:       213 22% 15%;
+  --secondary-foreground: 39 47% 93%;
+  --muted:           213 22% 15%;
+  --muted-foreground: 36 18% 73%;
+  --accent:          12 38% 16%;
+  --accent-foreground: 14 100% 72%;
+  --border:          210 17% 25%;
+  --input:           210 17% 25%;
+  --ring:            14 100% 62%;
 }
 
 /* ─── Base styles ─────────────────────────────────────────────── */
@@ -97,7 +107,7 @@
 
   body {
     @apply antialiased;
-    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-family: "DM Sans", Inter, ui-sans-serif, system-ui, sans-serif;
   }
 }
 
@@ -144,4 +154,265 @@ html:not(.dark) .dark-sidebar {
 button, a, input, textarea, select, [role="button"] {
   transition-property: all;
   transition-duration: 150ms;
+}
+
+/* ─── Marquee animation ──────────────────────────────────────── */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(calc(-100% - var(--gap))); }
+}
+
+@keyframes marquee-vertical {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(calc(-100% - var(--gap))); }
+}
+
+.animate-marquee {
+  animation: marquee var(--duration, 40s) linear infinite;
+}
+
+.animate-marquee-vertical {
+  animation: marquee-vertical var(--duration, 40s) linear infinite;
+}
+
+/* ─── Fade-in on scroll ──────────────────────────────────────── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out both;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out both;
+}
+
+/* Stagger children */
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 80ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 160ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 240ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 320ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 400ms; }
+
+/* ─── Dot grid background ────────────────────────────────────── */
+.bg-dot-grid {
+  background-image: radial-gradient(circle, currentColor 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ─── Glassmorphism utility ──────────────────────────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+html:not(.dark) .glass {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+/* ─── Glow pulse for accent elements ─────────────────────────── */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(124, 58, 237, 0.15); }
+  50%      { box-shadow: 0 0 40px rgba(124, 58, 237, 0.3); }
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+
+/* Career Atlas / ResuMate product design system */
+::selection {
+  background: var(--brand);
+  color: #fffaf0;
+}
+
+.resumate-shell {
+  min-height: 100vh;
+  color: var(--text);
+  font-family: "DM Sans", Inter, ui-sans-serif, system-ui, sans-serif;
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle at 12% 6%, color-mix(in srgb, var(--brand) 9%, transparent), transparent 22rem),
+    radial-gradient(circle at 92% 30%, color-mix(in srgb, var(--sage) 12%, transparent), transparent 26rem);
+  background-attachment: fixed;
+}
+
+.dark .resumate-shell {
+  background-image:
+    radial-gradient(circle at 12% 6%, rgba(255, 106, 61, 0.16), transparent 25rem),
+    radial-gradient(circle at 92% 30%, rgba(143, 174, 164, 0.13), transparent 28rem),
+    linear-gradient(180deg, #090a0c 0%, #10141a 56%, #08090b 100%);
+}
+
+.resumate-page-title {
+  color: var(--text);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.03;
+}
+
+.resumate-kicker {
+  color: var(--brand);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+.resumate-surface {
+  border: 1px solid var(--border);
+  background-color: var(--card-bg);
+  box-shadow: var(--shadow);
+}
+
+.resumate-paper {
+  background-color: var(--card-bg);
+  background-image: linear-gradient(rgba(65, 58, 45, 0.03) 1px, transparent 1px);
+  background-size: 100% 28px;
+}
+
+.dark .resumate-paper {
+  background-image:
+    linear-gradient(rgba(246, 239, 227, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(246, 239, 227, 0.03) 1px, transparent 1px);
+  background-size: 100% 28px, 28px 100%;
+}
+
+.resumate-shell input,
+.resumate-shell textarea,
+.resumate-shell select,
+.resumate-dashboard input,
+.resumate-dashboard textarea,
+.resumate-dashboard select {
+  font: inherit;
+  accent-color: var(--brand);
+}
+
+.resumate-shell :focus-visible,
+.resumate-dashboard :focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+}
+
+.resumate-shell button,
+.resumate-shell a,
+.resumate-dashboard button,
+.resumate-dashboard a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.resumate-dashboard {
+  color: var(--text);
+  font-family: "DM Sans", Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+.resumate-dashboard main {
+  background-image:
+    radial-gradient(circle at 90% 0%, color-mix(in srgb, var(--sage) 9%, transparent), transparent 24rem),
+    radial-gradient(circle at 18% 85%, color-mix(in srgb, var(--brand) 7%, transparent), transparent 26rem);
+}
+
+
+/* Compatibility layer for legacy route utility classes */
+.resumate-dashboard .text-white,
+html:not(.dark) .resumate-shell .text-slate-900 {
+  color: var(--text);
+}
+
+.resumate-dashboard .text-zinc-200,
+.resumate-dashboard .text-zinc-300,
+.resumate-dashboard .text-zinc-400,
+.resumate-dashboard .text-zinc-500,
+.resumate-dashboard .text-slate-400,
+.resumate-dashboard .text-slate-500,
+.resumate-dashboard .text-slate-600,
+.resumate-shell .text-slate-400,
+.resumate-shell .text-slate-500,
+.resumate-shell .text-slate-600 {
+  color: var(--text2);
+}
+
+.resumate-dashboard .text-zinc-600,
+.resumate-dashboard .text-slate-300 {
+  color: var(--text3);
+}
+
+.resumate-dashboard [class*="border-white"],
+.resumate-dashboard [class*="border-slate"] {
+  border-color: var(--border);
+}
+
+.resumate-dashboard [class*="bg-white/"],
+.resumate-dashboard [class*="bg-[#0f0f"],
+.resumate-shell [class*="bg-[#0f0f"],
+.resumate-shell [class*="bg-[#0c0c"],
+.resumate-shell [class*="bg-[#080810"] {
+  background-color: var(--card-bg);
+}
+
+.resumate-dashboard .bg-violet-600.text-white,
+.resumate-dashboard [class*="bg-gradient"] .text-white,
+.resumate-dashboard [class*="bg-red"] .text-white {
+  color: #fffaf0;
+}
+
+html:not(.dark) .resumate-dashboard .border-\[\#0f0f14\] {
+  border-color: var(--bg2);
+}
+
+.resumate-dashboard [class*="divide-white"] > :not([hidden]) ~ :not([hidden]) {
+  border-color: var(--border);
+}
+
+.resumate-shell .text-zinc-200,
+.resumate-shell .text-zinc-300 {
+  color: var(--text);
+}
+
+.resumate-shell .text-zinc-400,
+.resumate-shell .text-zinc-500 {
+  color: var(--text2);
+}
+
+.resumate-shell .text-zinc-600,
+.resumate-shell .placeholder-zinc-600::placeholder {
+  color: var(--text3);
+}
+
+.resumate-shell [class*="border-white"] {
+  border-color: var(--border);
+}
+
+.resumate-shell [class*="bg-white/"],
+.resumate-shell .bg-zinc-800,
+.resumate-shell .bg-zinc-900 {
+  background-color: var(--bg3);
+}
+
+.resumate-shell [class*="divide-white"] > :not([hidden]) ~ :not([hidden]) {
+  border-color: var(--border);
+}
+
+.dark .resumate-shell .bg-zinc-800,
+.dark .resumate-shell .bg-zinc-900 {
+  background-color: var(--bg3);
 }

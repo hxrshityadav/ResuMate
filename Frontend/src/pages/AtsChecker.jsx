@@ -84,7 +84,7 @@ const BREAKDOWN_LABELS = {
 /* ─── card helper ─────────────────────────────────────────── */
 function Card({ className = "", children }) {
     return (
-        <div className={`bg-[var(--bg2)] border border-[var(--border)] rounded-3xl ${className}`}>
+        <div data-motion-card className={`bg-[var(--bg2)] border border-[var(--border)] rounded-2xl transition-all duration-200 hover:border-[var(--border2)] ${className}`}>
             {children}
         </div>
     );
@@ -192,16 +192,18 @@ export default function AtsChecker() {
 
             {/* Hero */}
             <div className={`relative overflow-hidden border-b border-[var(--border)]`}>
-                <div className={`absolute inset-0 pointer-events-none ${isDark ? "bg-gradient-to-br from-violet-600/10 via-transparent to-fuchsia-600/5" : "bg-gradient-to-br from-violet-100/60 via-transparent to-fuchsia-100/40"}`} />
-                <div className="max-w-4xl mx-auto px-4 pt-28 pb-14 text-center relative">
-                    <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium mb-5 ${isDark ? "bg-violet-500/10 border-violet-500/20 text-violet-400" : "bg-violet-50 border-violet-200 text-violet-600"}`}>
-                        <Sparkles className="h-4 w-4" />
+                {/* Subtle dot grid */}
+                <div className={`absolute inset-0 bg-dot-grid opacity-[0.02] pointer-events-none ${isDark ? "text-white" : "text-black"}`} />
+                <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-[140px] pointer-events-none ${isDark ? "bg-violet-600/6" : "bg-violet-200/30"}`} />
+
+                <div className="max-w-4xl mx-auto px-4 pt-28 pb-12 text-center relative">
+                    <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium mb-4 ${isDark ? "bg-violet-500/10 border-violet-500/20 text-violet-400" : "bg-violet-50 border-violet-200 text-violet-600"}`}>
+                        <ShieldCheck className="h-3 w-3" />
                         AI-Powered ATS Scanner
                     </div>
-                    <h1 className="text-4xl sm:text-5xl font-bold mb-3 text-[var(--text)]">ATS Resume Checker</h1>
-                    <p className="text-lg max-w-xl mx-auto text-[var(--text2)]">
-                        Select a resume you built, upload a PDF, or paste plain text — then add an optional job
-                        description for a targeted score.
+                    <h1 className="resumate-page-title text-4xl sm:text-5xl mb-3 text-[var(--text)]">ATS Resume Checker</h1>
+                    <p className="text-sm max-w-lg mx-auto text-[var(--text2)]">
+                        Select a resume, upload a PDF, or paste text — add a job description for a targeted score.
                     </p>
                 </div>
             </div>
@@ -209,13 +211,13 @@ export default function AtsChecker() {
             <div className="max-w-4xl mx-auto px-4 py-10 space-y-6">
 
                 {/* Tabs */}
-                <div className={`flex gap-2 border p-1.5 rounded-2xl bg-[var(--bg2)] border-[var(--border)]`}>
+                <div className={`flex gap-1 border p-1 rounded-xl bg-[var(--bg2)] border-[var(--border)]`}>
                     {TABS.map((tab) => (
                         <button key={tab.id}
                             onClick={() => { setActiveTab(tab.id); setResult(null); }}
-                            className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                            className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium transition-all ${
                                 activeTab === tab.id
-                                    ? "bg-violet-600 text-white shadow-lg shadow-violet-500/30"
+                                    ? "bg-violet-600 text-white shadow-md shadow-violet-500/20"
                                     : tabInactive
                             }`}>
                             {tab.icon}{tab.label}
@@ -372,9 +374,9 @@ export default function AtsChecker() {
 
                 {/* CTA */}
                 <button onClick={handleCheck} disabled={loading}
-                    className="w-full py-4 rounded-2xl bg-violet-600 hover:bg-violet-500 text-white font-semibold text-base transition-all shadow-lg shadow-violet-500/30 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3">
-                    {loading ? <><Loader2 className="h-5 w-5 animate-spin" />Analyzing your resume...</>
-                             : <><ShieldCheck className="h-5 w-5" />Check ATS Score</>}
+                    className="w-full py-3.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-semibold text-sm transition-all shadow-md shadow-violet-500/20 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2.5 hover:-translate-y-px">
+                    {loading ? <><Loader2 className="h-4 w-4 animate-spin" />Analyzing your resume...</>
+                             : <><ShieldCheck className="h-4 w-4" />Check ATS Score</>}
                 </button>
 
                 {/* Results */}

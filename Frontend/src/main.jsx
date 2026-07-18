@@ -21,6 +21,7 @@ import TargetResume from './pages/TargetResume';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import { PageMotion } from './components/PageMotion';
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
@@ -45,7 +46,7 @@ createRoot(document.getElementById('root')).render(
                     </Route>
 
                     {/* Login page (standalone, no navbar) */}
-                    <Route path="/login" element={<Login />} />
+                    <Route path="/login" element={<PageMotion routeKey="/login"><Login /></PageMotion>} />
 
                     {/* Protected dashboard */}
                     <Route
@@ -62,7 +63,7 @@ createRoot(document.getElementById('root')).render(
                         <Route path="settings" element={<Settings />} />
                     </Route>
 
-                    <Route path="*" element={<NotFound />} />
+                    <Route path="*" element={<PageMotion routeKey="not-found"><NotFound /></PageMotion>} />
                 </Routes>
             </AuthProvider>
             </ThemeProvider>

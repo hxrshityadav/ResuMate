@@ -37,7 +37,7 @@ function Profile() {
     return (
         <div className="space-y-6 max-w-2xl">
             <div>
-                <h1 className="text-2xl lg:text-3xl font-bold text-white">Profile</h1>
+                <h1 className="resumate-page-title text-3xl lg:text-4xl">Profile</h1>
                 <p className="text-zinc-500 text-sm mt-1">Manage your account details</p>
             </div>
 
@@ -118,11 +118,11 @@ function Profile() {
     );
 }
 
-function InfoRow({ icon: Icon, label, value, badge }) {
+function InfoRow({ icon: ICON, label, value, badge }) {
     return (
         <div className="flex items-center gap-4 px-5 py-4">
             <div className="h-9 w-9 rounded-lg bg-white/[0.05] flex items-center justify-center shrink-0">
-                <Icon className="h-4 w-4 text-zinc-500" />
+                {React.createElement(ICON, { className: "h-4 w-4 text-zinc-500" })}
             </div>
             <div className="flex-1 min-w-0">
                 <p className="text-xs text-zinc-600 mb-0.5">{label}</p>

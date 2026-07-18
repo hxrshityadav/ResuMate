@@ -32,5 +32,13 @@ dist-ssr/
 *.log
 npm-debug.log*
 yarn-debug.log*
+
+# Local agent tooling and generated analysis
+/.agents/
+/Frontend/.agents/
+/skills-lock.json
+/Frontend/skills-lock.json
+/graphify-out/
+/package-lock.json
 yarn-error.log*
 pnpm-debug.log*

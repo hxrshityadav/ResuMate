@@ -96,14 +96,11 @@ export default function DashboardHome() {
         : "—";
 
     /* ── Derived style helpers ── */
-    const card      = isDark
-        ? "bg-[#0f0f1c] border-white/[0.08] hover:border-white/[0.14]"
-        : "bg-white border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-md";
-    const subText   = isDark ? "text-zinc-500" : "text-slate-400";
-    const bodyText  = isDark ? "text-zinc-300" : "text-slate-600";
-    const headText  = isDark ? "text-white"    : "text-slate-900";
-    const divider   = isDark ? "divide-white/[0.05]" : "divide-slate-100";
-    const rowHover  = isDark ? "hover:bg-white/[0.03]" : "hover:bg-slate-50";
+    const card      = "bg-[var(--card-bg)] border-[var(--border)] hover:border-[var(--border2)] shadow-app";
+    const subText   = "text-[var(--text3)]";
+    const headText  = "text-[var(--text)]";
+    const divider   = "divide-[var(--border)]";
+    const rowHover  = "hover:bg-[var(--bg3)]";
 
     const stats = [
         {
@@ -113,7 +110,7 @@ export default function DashboardHome() {
             color: isDark ? "text-violet-400" : "text-violet-600",
             bg: isDark ? "bg-violet-500/10" : "bg-violet-50",
             border: isDark ? "border-violet-500/20" : "border-violet-100",
-            valueColor: isDark ? "text-white" : "text-slate-900",
+            valueColor: "text-[var(--text)]",
         },
         {
             icon: Clock,
@@ -122,7 +119,7 @@ export default function DashboardHome() {
             color: isDark ? "text-blue-400" : "text-blue-600",
             bg: isDark ? "bg-blue-500/10" : "bg-blue-50",
             border: isDark ? "border-blue-500/20" : "border-blue-100",
-            valueColor: isDark ? "text-white" : "text-slate-900",
+            valueColor: "text-[var(--text)]",
         },
         {
             icon: TrendingUp,
@@ -131,7 +128,7 @@ export default function DashboardHome() {
             color: isDark ? "text-emerald-400" : "text-emerald-600",
             bg: isDark ? "bg-emerald-500/10" : "bg-emerald-50",
             border: isDark ? "border-emerald-500/20" : "border-emerald-100",
-            valueColor: isDark ? "text-white" : "text-slate-900",
+            valueColor: "text-[var(--text)]",
         },
         {
             icon: BarChart2,
@@ -142,7 +139,7 @@ export default function DashboardHome() {
             border: isDark ? "border-amber-500/20" : "border-amber-100",
             valueColor: resumes.length > 0
                 ? isDark ? "text-amber-300" : "text-amber-600"
-                : isDark ? "text-white" : "text-slate-900",
+                : "text-[var(--text)]",
         },
     ];
 
@@ -156,11 +153,7 @@ export default function DashboardHome() {
                         <span className="text-lg">👋</span>
                         <p className={`text-sm font-medium ${subText}`}>Welcome back,</p>
                     </div>
-                    <h1 className={`text-3xl lg:text-4xl font-black tracking-tight ${
-                        isDark
-                            ? "bg-gradient-to-r from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent"
-                            : "text-slate-900"
-                    }`}>
+                    <h1 className="resumate-page-title text-3xl lg:text-4xl">
                         {firstName}
                     </h1>
                 </div>
@@ -201,7 +194,7 @@ export default function DashboardHome() {
                         const Icon = a.icon;
                         return (
                             <Link key={a.path} to={a.path}
-                                className={`group relative rounded-2xl border p-5 transition-all duration-200 hover:-translate-y-1 ring-2 ring-transparent ${card} ${a.ring} shadow-lg ${a.shadow}`}>
+                                className={`group relative rounded-2xl border p-5 transition-all duration-200 hover:-translate-y-0.5 ${card}`}>
                                 <div className={`inline-flex items-center justify-center h-11 w-11 rounded-xl bg-gradient-to-br ${a.gradient} mb-4 shadow-lg group-hover:scale-105 transition-transform`}>
                                     <Icon className="h-5 w-5 text-white" />
                                 </div>
@@ -226,8 +219,8 @@ export default function DashboardHome() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
                 {/* Recent Resumes */}
-                <div className={`lg:col-span-2 rounded-2xl border overflow-hidden ${isDark ? "bg-[#0f0f1c] border-white/[0.08]" : "bg-white border-slate-200 shadow-sm"}`}>
-                    <div className={`flex items-center justify-between px-6 py-4 border-b ${isDark ? "border-white/[0.06]" : "border-slate-100"}`}>
+                <div className="lg:col-span-2 rounded-2xl border border-[var(--border)] bg-[var(--card-bg)] shadow-app overflow-hidden">
+                    <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--border)]">
                         <h2 className={`font-bold text-sm ${headText}`}>Recent Resumes</h2>
                         <Link to="/dashboard/resumes"
                             className={`text-xs font-semibold flex items-center gap-1 transition-colors ${isDark ? "text-violet-400 hover:text-violet-300" : "text-violet-600 hover:text-violet-700"}`}>
@@ -294,7 +287,7 @@ export default function DashboardHome() {
                         </div>
                         <div className="min-h-[72px] transition-all duration-500">
                             <p className="text-2xl mb-2">{TIPS[tipIdx].icon}</p>
-                            <p className={`text-sm leading-relaxed ${isDark ? "text-zinc-300" : "text-violet-900/80"}`}>
+                            <p className="text-sm leading-relaxed text-[var(--text2)]">
                                 {TIPS[tipIdx].text}
                             </p>
                         </div>
@@ -311,7 +304,7 @@ export default function DashboardHome() {
                     </div>
 
                     {/* ATS ready */}
-                    <div className={`rounded-2xl border p-5 ${isDark ? "bg-[#0f0f1c] border-white/[0.08]" : "bg-white border-slate-200 shadow-sm"}`}>
+                    <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-bg)] p-5 shadow-app">
                         <div className="flex items-center gap-2 mb-2">
                             <ShieldCheck className={`h-4 w-4 ${isDark ? "text-emerald-400" : "text-emerald-500"}`} />
                             <p className={`text-xs font-bold uppercase tracking-wider ${isDark ? "text-emerald-300" : "text-emerald-600"}`}>

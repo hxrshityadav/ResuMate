@@ -7,6 +7,7 @@ import {
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import toast from "react-hot-toast";
+import { PageMotion } from "../components/PageMotion";
 
 const NAV_ITEMS = [
     { icon: LayoutDashboard, label: "Dashboard",     path: "/dashboard" },
@@ -192,29 +193,30 @@ function MobileNav({ onClose, isDark }) {
 function DashboardLayout() {
     const [open, setOpen] = useState(false);
     const { isDark } = useTheme();
+    const location = useLocation();
 
-    const sidebarBg     = isDark ? "bg-[#0f0f14] border-white/[0.06]"   : "bg-white border-slate-200";
-    const topbarBg      = isDark ? "bg-[#0f0f14] border-white/[0.06]"   : "bg-white border-slate-200";
-    const menuLabel     = isDark ? "text-zinc-600" : "text-slate-400";
+    const sidebarBg     = "bg-[var(--bg2)] border-[var(--border)]";
+    const topbarBg      = "bg-[var(--nav-bg)] border-[var(--nav-border)] backdrop-blur-xl";
+    const menuLabel     = "text-[var(--text3)]";
     const tipBg         = isDark
-        ? "from-violet-500/10 to-fuchsia-500/10 border-violet-500/15"
+        ? "from-violet-500/15 to-fuchsia-500/10 border-violet-500/25"
         : "from-violet-50 to-fuchsia-50 border-violet-200";
-    const tipText       = isDark ? "text-violet-300" : "text-violet-600";
-    const tipBody       = isDark ? "text-zinc-400" : "text-violet-700/80";
+    const tipText       = "text-violet-500";
+    const tipBody       = "text-[var(--text2)]";
 
     return (
-        <div className={`min-h-screen flex transition-colors duration-300 ${isDark ? "bg-[#080810] text-white" : "bg-slate-50 text-slate-900"}`}>
+        <div className="resumate-dashboard min-h-screen flex bg-[var(--bg)] text-[var(--text)] transition-colors duration-300">
 
             {/* DESKTOP SIDEBAR */}
             <aside className={`hidden lg:flex flex-col w-[240px] shrink-0 min-h-screen sticky top-0 h-screen border-r ${sidebarBg}`}>
                 {/* Logo */}
                 <div className={`px-5 py-5 border-b ${isDark ? "border-white/[0.06]" : "border-slate-200"}`}>
                     <Link to="/" className="flex items-center gap-2.5 group">
-                        <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/25 group-hover:scale-105 transition-transform">
-                            <Sparkles className="h-4 w-4 text-white" />
+                        <div className={`grid h-10 w-10 rotate-3 place-items-center rounded-[14px] group-hover:-rotate-3 transition-transform ${isDark ? "bg-[#f6efe3] text-[#10141a]" : "bg-[#25241f] text-[#f7f1e5]"}`}>
+                            <Sparkles className="h-4 w-4" />
                         </div>
-                        <span className={`font-black text-[15px] tracking-tight ${isDark ? "text-white" : "text-slate-900"}`}>
-                            Resu<span className="bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-transparent">Mate</span>
+                        <span className="atlas-serif text-xl font-semibold tracking-[-0.03em] text-[var(--text)]">
+                            ResuMate
                         </span>
                     </Link>
                 </div>
@@ -256,15 +258,17 @@ function DashboardLayout() {
                         <Menu className="h-4 w-4" />
                     </button>
                     <div className="flex items-center gap-2">
-                        <div className="h-6 w-6 rounded bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">
-                            <Sparkles className="h-3 w-3 text-white" />
+                        <div className={`grid h-7 w-7 rotate-3 place-items-center rounded-lg ${isDark ? "bg-[#f6efe3] text-[#10141a]" : "bg-[#25241f] text-[#f7f1e5]"}`}>
+                            <Sparkles className="h-3 w-3" />
                         </div>
-                        <span className={`font-bold text-sm ${isDark ? "text-white" : "text-slate-900"}`}>ResuMate</span>
+                        <span className="atlas-serif text-base font-semibold text-[var(--text)]">ResuMate</span>
                     </div>
                 </div>
 
                 <main className="flex-1 p-5 lg:p-8 max-w-7xl w-full mx-auto">
-                    <Outlet />
+                    <PageMotion routeKey={location.pathname}>
+                        <Outlet />
+                    </PageMotion>
                 </main>
             </div>
         </div>
