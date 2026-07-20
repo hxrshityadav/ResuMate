@@ -322,12 +322,13 @@ export default function TargetResume() {
         setAiImproving(key);
         const toastId = toast.loading("✨ AI improving…");
         try {
-            const res = await axiosInstance.post("/api/v1/resume/improve-section", {
+            const res = await axiosInstance.post("/resume/improve-section", {
                 sectionType,
                 content: typeof content === "string" ? content : JSON.stringify(content),
             });
-            if (res.data?.error) throw new Error(res.data.error);
-            onResult(res.data);
+            const data = res?.data !== undefined ? res.data : res;
+            if (data?.error) throw new Error(data.error);
+            onResult(data);
             toast.success("✨ Improved!", { id: toastId });
         } catch (err) {
             let msg = "AI improve failed. Try again.";
@@ -393,13 +394,14 @@ export default function TargetResume() {
         setAtsResult(null);
         const toastId = toast.loading("🎯 Tailoring your resume to the job…");
         try {
-            const res = await axiosInstance.post("/api/v1/resume/target-resume", {
+            const res = await axiosInstance.post("/resume/target-resume", {
                 resumeText: resumeText.trim(),
                 jobDescription,
                 targetRole,
             });
-            if (res.data?.error) throw new Error(res.data.error);
-            const normalized = normalizeResume({ ...res.data, targetRole });
+            const data = res?.data !== undefined ? res.data : res;
+            if (data?.error) throw new Error(data.error);
+            const normalized = normalizeResume({ ...data, targetRole });
             setResumeData(normalized);
             toast.success("✅ Targeted resume generated!", { id: toastId });
             runAtsCheck(normalized, jobDescription);  // auto-run ATS check

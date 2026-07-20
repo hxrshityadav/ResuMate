@@ -201,14 +201,15 @@ function Create() {
         setAiImproving(key);
         const toastId = toast.loading("✨ AI improving…");
         try {
-            const res = await axiosInstance.post("/api/v1/resume/improve-section", {
+            const res = await axiosInstance.post("/resume/improve-section", {
                 sectionType,
                 content: typeof content === "string" ? content : JSON.stringify(content),
             });
-            if (res.data?.error) {
-                throw new Error(res.data.error);
+            const data = res?.improved !== undefined ? res : (res?.data || res);
+            if (data?.error) {
+                throw new Error(data.error);
             }
-            onResult(res.data);
+            onResult(data);
             toast.success("✨ Improved!", { id: toastId });
         } catch (err) {
             console.error(err);
@@ -252,16 +253,16 @@ function Create() {
         try {
             setLoading(true);
             toast.loading("Generating your resume…");
-            const res = await axiosInstance.post("/api/v1/resume/generate", { userDescription: prompt });
-            const data = res.data;
+            const res = await axiosInstance.post("/resume/generate", { userDescription: prompt });
+            const data = res?.personalInformation ? res : (res?.data || res);
             const safeSkills = Array.isArray(data.skills)
-                ? data.skills.map((item) => (typeof item === "object" ? item.title || item.name || "" : item))
+                ? data.skills.map((item) => (typeof item === "object" ? item.title || item.name || "" : String(item)))
                 : [];
             setResumeData({
-                name: data.personalInformation?.fullName || data.name || "Your Name",
-                role: data.role || "Software Engineer",
+                name: data.personalInformation?.fullName || data.personalInformation?.name || data.name || "Your Name",
+                role: data.role || data.personalInformation?.role || "Software Engineer",
                 location: data.personalInformation?.location || data.location || "India",
-                phone: data.personalInformation?.phoneNumber || data.phone || "",
+                phone: data.personalInformation?.phoneNumber || data.personalInformation?.phone || data.phone || "",
                 email: data.personalInformation?.email || data.email || "",
                 linkedIn: data.personalInformation?.linkedIn || "",
                 gitHub: data.personalInformation?.gitHub || "",

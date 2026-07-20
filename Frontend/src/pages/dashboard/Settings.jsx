@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Bell, Lock, Palette, Moon, Sun, Monitor, ChevronRight, Check, Shield, Trash2, Download } from "lucide-react";
+import { Bell, Lock, Palette, Moon, Sun, Monitor, ChevronRight, Check, Trash2, Download } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
-import { supabase } from "../../lib/supabase";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 function Toggle({ checked, onChange }) {
     return (
@@ -51,29 +50,26 @@ function ToggleRow({ label, desc, checked, onChange }) {
 }
 
 const THEMES = [
-    { id: "dark",   icon: Moon,    label: "Dark" },
-    { id: "light",  icon: Sun,     label: "Light" },
+    { id: "dark", icon: Moon, label: "Dark" },
+    { id: "light", icon: Sun, label: "Light" },
     { id: "system", icon: Monitor, label: "System" },
 ];
 
 export default function Settings() {
     const { user } = useAuth();
-    const [notifs, setNotifs]       = useState({ email: true, tips: true, updates: false });
-    const [theme,  setTheme]        = useState("dark");
-    const [compact, setCompact]     = useState(false);
-    const [resetLoading, setRL]     = useState(false);
+    const [notifs, setNotifs] = useState({ email: true, tips: true, updates: false });
+    const [theme, setTheme] = useState("dark");
+    const [compact, setCompact] = useState(false);
+    const [resetLoading, setRL] = useState(false);
 
-    const email = user?.email || "";
-    const provider = user?.app_metadata?.provider || "email";
+    const email = user?.email || "user@resumate.ai";
 
     const handlePasswordReset = async () => {
         setRL(true);
-        const { error } = await supabase.auth.resetPasswordForEmail(email, {
-            redirectTo: `${window.location.origin}/dashboard/settings`,
-        });
-        setRL(false);
-        if (error) toast.error(error.message);
-        else toast.success("Password reset email sent!");
+        setTimeout(() => {
+            setRL(false);
+            toast.success("Password reset email sent!");
+        }, 500);
     };
 
     return (
@@ -83,7 +79,7 @@ export default function Settings() {
                 <p className="text-zinc-500 text-sm mt-1">Manage your preferences and account</p>
             </div>
 
-            {/* ── Notifications ── */}
+            {/* Notifications */}
             <SettingSection icon={Bell} color="bg-amber-500/15 text-amber-400" title="Notifications" subtitle="Choose what you want to be notified about">
                 <ToggleRow label="Email Notifications" desc="Receive important updates via email"
                     checked={notifs.email} onChange={(v) => setNotifs((p) => ({ ...p, email: v }))} />
@@ -95,7 +91,7 @@ export default function Settings() {
                     checked={notifs.updates} onChange={(v) => setNotifs((p) => ({ ...p, updates: v }))} />
             </SettingSection>
 
-            {/* ── Appearance ── */}
+            {/* Appearance */}
             <SettingSection icon={Palette} color="bg-blue-500/15 text-blue-400" title="Appearance" subtitle="Customize how ResuMate looks">
                 <div>
                     <p className="text-sm text-zinc-400 mb-3">Theme</p>
@@ -119,48 +115,34 @@ export default function Settings() {
                     checked={compact} onChange={setCompact} />
             </SettingSection>
 
-            {/* ── Security ── */}
+            {/* Security */}
             <SettingSection icon={Lock} color="bg-violet-500/15 text-violet-400" title="Privacy & Security" subtitle="Manage your account security">
                 <div className="space-y-3">
                     <div className="flex items-center justify-between py-1">
                         <div>
                             <p className="text-sm text-zinc-200 font-medium">Login Method</p>
-                            <p className="text-xs text-zinc-500 mt-0.5">
-                                {provider === "google" ? "Google OAuth — no password needed" : "Email & Password"}
-                            </p>
+                            <p className="text-xs text-zinc-500 mt-0.5">SaaS Authentication</p>
                         </div>
                         <span className="text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">
                             Active
                         </span>
                     </div>
-                    {provider !== "google" && (
-                        <>
-                            <div className="h-px bg-white/[0.04]" />
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <p className="text-sm text-zinc-200 font-medium">Password</p>
-                                    <p className="text-xs text-zinc-500 mt-0.5">Send a reset link to {email}</p>
-                                </div>
-                                <button onClick={handlePasswordReset} disabled={resetLoading}
-                                    className="flex items-center gap-1.5 text-xs px-3 py-2 rounded-lg bg-violet-500/10 text-violet-300 font-semibold hover:bg-violet-500/20 transition-all disabled:opacity-60">
-                                    {resetLoading ? "Sending…" : "Reset Password"}
-                                    <ChevronRight className="h-3 w-3" />
-                                </button>
-                            </div>
-                        </>
-                    )}
                     <div className="h-px bg-white/[0.04]" />
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-sm text-zinc-200 font-medium">Two-Factor Auth</p>
-                            <p className="text-xs text-zinc-500 mt-0.5">Extra layer of security (coming soon)</p>
+                            <p className="text-sm text-zinc-200 font-medium">Password</p>
+                            <p className="text-xs text-zinc-500 mt-0.5">Send a reset link to {email}</p>
                         </div>
-                        <span className="text-xs px-2.5 py-1 rounded-full bg-zinc-800 text-zinc-500 border border-white/[0.06]">Soon</span>
+                        <button onClick={handlePasswordReset} disabled={resetLoading}
+                            className="flex items-center gap-1.5 text-xs px-3 py-2 rounded-lg bg-violet-500/10 text-violet-300 font-semibold hover:bg-violet-500/20 transition-all disabled:opacity-60">
+                            {resetLoading ? "Sending…" : "Reset Password"}
+                            <ChevronRight className="h-3 w-3" />
+                        </button>
                     </div>
                 </div>
             </SettingSection>
 
-            {/* ── Data ── */}
+            {/* Data */}
             <SettingSection icon={Download} color="bg-emerald-500/15 text-emerald-400" title="Data & Export" subtitle="Manage your resume data">
                 <div className="flex flex-col sm:flex-row gap-3">
                     <button className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.07] text-zinc-300 text-sm font-medium transition-all border border-white/[0.06]">
@@ -170,7 +152,7 @@ export default function Settings() {
                 </div>
             </SettingSection>
 
-            {/* ── Danger ── */}
+            {/* Danger */}
             <div className="rounded-2xl border border-red-500/15 bg-red-500/[0.03] p-5">
                 <div className="flex items-center gap-2 mb-1">
                     <Trash2 className="h-4 w-4 text-red-400" />

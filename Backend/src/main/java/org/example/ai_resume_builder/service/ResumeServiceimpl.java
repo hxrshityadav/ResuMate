@@ -1,75 +1,28 @@
 package org.example.ai_resume_builder.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.example.ai_resume_builder.router.AiRouter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
 import java.util.Map;
 
 @Service
 public class ResumeServiceimpl implements ResumeService {
 
-    @Value("${gemini.api.key}")
-    private String apiKey;
+    private static final Logger log = LoggerFactory.getLogger(ResumeServiceimpl.class);
 
-    @Value("${gemini.url}")
-    private String url;
-
+    private final AiRouter aiRouter;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    /**
-     * Call Gemini with up to 4 retries on transient errors (429 rate limit, 503 overload, connection resets).
-     * Backs off: 15s → 30s → 60s for 429; 2s → 4s → 8s for 5xx/connection errors.
-     */
-    private String callGemini(Map<String, Object> body) throws Exception {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
-        RestTemplate restTemplate = new RestTemplate();
-
-        int maxAttempts = 4;
-        Exception lastEx = null;
-        for (int attempt = 1; attempt <= maxAttempts; attempt++) {
-            try {
-                return restTemplate.postForObject(url + "?key=" + apiKey, entity, String.class);
-            } catch (HttpClientErrorException e) {
-                if (e.getStatusCode().value() == 429) {
-                    // Rate limited — back off longer before retrying
-                    lastEx = e;
-                    if (attempt < maxAttempts) Thread.sleep(15000L * attempt);
-                } else {
-                    throw e; // 4xx other than 429 are not retryable
-                }
-            } catch (HttpServerErrorException e) {
-                // Retry on 5xx (503 overload, 500, etc.)
-                lastEx = e;
-                if (attempt < maxAttempts) Thread.sleep(2000L * attempt);
-            } catch (Exception e) {
-                // Retry on connection errors (reset, timeout)
-                String msg = e.getMessage() != null ? e.getMessage() : "";
-                if (msg.contains("connection") || msg.contains("reset") || msg.contains("timeout")) {
-                    lastEx = e;
-                    if (attempt < maxAttempts) Thread.sleep(2000L * attempt);
-                } else {
-                    throw e; // non-transient error, fail fast
-                }
-            }
-        }
-        throw lastEx != null ? lastEx : new RuntimeException("Gemini API unreachable");
+    public ResumeServiceimpl(AiRouter aiRouter) {
+        this.aiRouter = aiRouter;
     }
 
     @Override
     public Map<String, Object> generateResumeResponse(String userResumeDescription) {
-
         try {
-
             String prompt =
                     "Generate ONLY valid JSON professional IT resume.\n" +
                             "Return ONLY JSON. No markdown. No explanation.\n" +
@@ -159,26 +112,13 @@ public class ResumeServiceimpl implements ResumeService {
                             "- technologiesUsed must always be string array.\n" +
                             "- Use user's actual data wherever possible.\n\n" +
 
-                            "User Description:\n" +
-                            userResumeDescription;
+                            "User Description:\n" + userResumeDescription;
 
-            Map<String, Object> body = Map.of(
-                    "contents", List.of(Map.of("parts", List.of(Map.of("text", prompt))))
-            );
-
-            String response = callGemini(body);
-
-            Map<String, Object> root = mapper.readValue(response, Map.class);
-            List<?> candidates = (List<?>) root.get("candidates");
-            Map<?, ?> firstCandidate = (Map<?, ?>) candidates.get(0);
-            Map<?, ?> content = (Map<?, ?>) firstCandidate.get("content");
-            List<?> parts = (List<?>) content.get("parts");
-            String text = ((Map<?, ?>) parts.get(0)).get("text").toString()
-                    .replace("```json", "").replace("```", "").trim();
-
-            return mapper.readValue(text, Map.class);
+            String jsonText = aiRouter.execute(prompt, "/generate");
+            return mapper.readValue(jsonText, Map.class);
 
         } catch (Exception e) {
+            log.error("Failed to generate resume via AI Router", e);
             return Map.of("error", e.getMessage());
         }
     }
@@ -215,23 +155,11 @@ public class ResumeServiceimpl implements ResumeService {
                 return Map.of("error", "Unknown section type: " + sectionType);
             }
 
-            Map<String, Object> body = Map.of(
-                    "contents", List.of(Map.of("parts", List.of(Map.of("text", prompt))))
-            );
-
-            String response = callGemini(body);
-
-            Map<String, Object> root = mapper.readValue(response, Map.class);
-            List<?> candidates = (List<?>) root.get("candidates");
-            Map<?, ?> firstCandidate = (Map<?, ?>) candidates.get(0);
-            Map<?, ?> c = (Map<?, ?>) firstCandidate.get("content");
-            List<?> parts = (List<?>) c.get("parts");
-            String text = ((Map<?, ?>) parts.get(0)).get("text").toString()
-                    .replace("```json", "").replace("```", "").trim();
-
-            return mapper.readValue(text, Map.class);
+            String jsonText = aiRouter.execute(prompt, "/improve-section");
+            return mapper.readValue(jsonText, Map.class);
 
         } catch (Exception e) {
+            log.error("Failed to improve section via AI Router", e);
             return Map.of("error", e.getMessage());
         }
     }
@@ -245,59 +173,47 @@ public class ResumeServiceimpl implements ResumeService {
 
             String prompt =
                     "You are an expert ATS (Applicant Tracking System) analyzer.\n" +
-                    "Analyze the following resume and return ONLY valid JSON. No markdown. No explanation.\n\n" +
+                            "Analyze the following resume and return ONLY valid JSON. No markdown. No explanation.\n\n" +
 
-                    jobDescSection +
+                            jobDescSection +
 
-                    "Resume Text:\n" + resumeText + "\n\n" +
+                            "Resume Text:\n" + resumeText + "\n\n" +
 
-                    "Return ONLY this JSON structure:\n" +
-                    "{\n" +
-                    "  \"overallScore\": 78,\n" +
-                    "  \"scoreBreakdown\": {\n" +
-                    "    \"keywordsMatch\": 80,\n" +
-                    "    \"formatting\": 85,\n" +
-                    "    \"skillsRelevance\": 75,\n" +
-                    "    \"experienceClarity\": 70,\n" +
-                    "    \"educationPresence\": 90\n" +
-                    "  },\n" +
-                    "  \"strengths\": [\"Clear contact information\", \"Strong action verbs used\"],\n" +
-                    "  \"improvements\": [\"Add more relevant keywords\", \"Quantify achievements with numbers\"],\n" +
-                    "  \"missingKeywords\": [\"Docker\", \"CI/CD\", \"Agile\"],\n" +
-                    "  \"detectedKeywords\": [\"Java\", \"Spring Boot\", \"React\"],\n" +
-                    "  \"summary\": \"Your resume scores 78/100. It is well-structured but missing some key industry terms.\"\n" +
-                    "}\n\n" +
+                            "Return ONLY this JSON structure:\n" +
+                            "{\n" +
+                            "  \"overallScore\": 78,\n" +
+                            "  \"scoreBreakdown\": {\n" +
+                            "    \"keywordsMatch\": 80,\n" +
+                            "    \"formatting\": 85,\n" +
+                            "    \"skillsRelevance\": 75,\n" +
+                            "    \"experienceClarity\": 70,\n" +
+                            "    \"educationPresence\": 90\n" +
+                            "  },\n" +
+                            "  \"strengths\": [\"Clear contact information\", \"Strong action verbs used\"],\n" +
+                            "  \"improvements\": [\"Add more relevant keywords\", \"Quantify achievements with numbers\"],\n" +
+                            "  \"missingKeywords\": [\"Docker\", \"CI/CD\", \"Agile\"],\n" +
+                            "  \"detectedKeywords\": [\"Java\", \"Spring Boot\", \"React\"],\n" +
+                            "  \"summary\": \"Your resume scores 78/100. It is well-structured but missing some key industry terms.\"\n" +
+                            "}\n\n" +
 
-                    "Scoring rules:\n" +
-                    "- overallScore: weighted average of all breakdown scores (0-100)\n" +
-                    "- keywordsMatch: how well resume keywords match the job description (or industry norms if no JD)\n" +
-                    "- formatting: clean structure, bullet points, proper sections present\n" +
-                    "- skillsRelevance: how relevant and strong the skills section is\n" +
-                    "- experienceClarity: clear job titles, companies, dates, quantified achievements\n" +
-                    "- educationPresence: degree, institution, graduation year present\n" +
-                    "- strengths: list of 3-5 specific things done well\n" +
-                    "- improvements: list of 3-5 actionable suggestions\n" +
-                    "- missingKeywords: list of important keywords missing from the resume\n" +
-                    "- detectedKeywords: list of strong keywords already present\n" +
-                    "- summary: one paragraph summary of the ATS analysis";
+                            "Scoring rules:\n" +
+                            "- overallScore: weighted average of all breakdown scores (0-100)\n" +
+                            "- keywordsMatch: how well resume keywords match the job description (or industry norms if no JD)\n" +
+                            "- formatting: clean structure, bullet points, proper sections present\n" +
+                            "- skillsRelevance: how relevant and strong the skills section is\n" +
+                            "- experienceClarity: clear job titles, companies, dates, quantified achievements\n" +
+                            "- educationPresence: degree, institution, graduation year present\n" +
+                            "- strengths: list of 3-5 specific things done well\n" +
+                            "- improvements: list of 3-5 actionable suggestions\n" +
+                            "- missingKeywords: list of important keywords missing from the resume\n" +
+                            "- detectedKeywords: list of strong keywords already present\n" +
+                            "- summary: one paragraph summary of the ATS analysis";
 
-            Map<String, Object> body = Map.of(
-                    "contents", List.of(Map.of("parts", List.of(Map.of("text", prompt))))
-            );
-
-            String response = callGemini(body);
-
-            Map<String, Object> root = mapper.readValue(response, Map.class);
-            List<?> candidates = (List<?>) root.get("candidates");
-            Map<?, ?> firstCandidate = (Map<?, ?>) candidates.get(0);
-            Map<?, ?> content = (Map<?, ?>) firstCandidate.get("content");
-            List<?> parts = (List<?>) content.get("parts");
-            String text = ((Map<?, ?>) parts.get(0)).get("text").toString()
-                    .replace("```json", "").replace("```", "").trim();
-
-            return mapper.readValue(text, Map.class);
+            String jsonText = aiRouter.execute(prompt, "/ats-check");
+            return mapper.readValue(jsonText, Map.class);
 
         } catch (Exception e) {
+            log.error("Failed to check ATS score via AI Router", e);
             return Map.of("error", e.getMessage());
         }
     }
@@ -306,59 +222,47 @@ public class ResumeServiceimpl implements ResumeService {
     public Map<String, Object> generateTargetedResume(String resumeText, String jobDescription, String targetRole) {
         try {
             String prompt =
-                "You are an expert resume writer and ATS specialist.\n" +
-                "Rewrite the candidate's existing resume to be perfectly tailored for the target job role and job description below.\n" +
-                "Rules:\n" +
-                "- Use keywords and phrases directly from the job description.\n" +
-                "- Restructure bullet points to highlight relevant achievements and skills.\n" +
-                "- Keep all factual information (company names, dates, degrees) intact — do NOT invent new jobs.\n" +
-                "- Optimize the professional summary for the target role.\n" +
-                "- Reorder and emphasize skills that match the job description.\n" +
-                "- Return ONLY valid JSON. No markdown. No explanation.\n\n" +
+                    "You are an expert resume writer and ATS specialist.\n" +
+                            "Rewrite the candidate's existing resume to be perfectly tailored for the target job role and job description below.\n" +
+                            "Rules:\n" +
+                            "- Use keywords and phrases directly from the job description.\n" +
+                            "- Restructure bullet points to highlight relevant achievements and skills.\n" +
+                            "- Keep all factual information (company names, dates, degrees) intact — do NOT invent new jobs.\n" +
+                            "- Optimize the professional summary for the target role.\n" +
+                            "- Reorder and emphasize skills that match the job description.\n" +
+                            "- Return ONLY valid JSON. No markdown. No explanation.\n\n" +
 
-                "Target Job Role: " + targetRole + "\n\n" +
-                "Job Description:\n" + jobDescription + "\n\n" +
-                "Existing Resume Text:\n" + resumeText + "\n\n" +
+                            "Target Job Role: " + targetRole + "\n\n" +
+                            "Job Description:\n" + jobDescription + "\n\n" +
+                            "Existing Resume Text:\n" + resumeText + "\n\n" +
 
-                "Return ONLY this JSON structure:\n" +
-                "{\n" +
-                "  \"personalInformation\": {\n" +
-                "    \"fullName\":\"\", \"email\":\"\", \"phoneNumber\":\"\",\n" +
-                "    \"location\":\"\", \"linkedIn\":\"\", \"gitHub\":\"\", \"portfolio\":\"\"\n" +
-                "  },\n" +
-                "  \"summary\":\"\",\n" +
-                "  \"skills\":[{\"title\":\"Java\",\"level\":\"Advanced\"}],\n" +
-                "  \"experience\":[{\n" +
-                "    \"jobTitle\":\"\", \"company\":\"\", \"location\":\"\",\n" +
-                "    \"duration\":\"\", \"responsibility\":\"\"\n" +
-                "  }],\n" +
-                "  \"education\":[{\n" +
-                "    \"degree\":\"\", \"university\":\"\", \"location\":\"\", \"graduationYear\":\"\"\n" +
-                "  }],\n" +
-                "  \"certifications\":[{\"title\":\"\",\"issuingOrganization\":\"\",\"year\":\"\"}],\n" +
-                "  \"projects\":[{\"title\":\"\",\"description\":\"\",\"technologiesUsed\":[],\"githubLink\":\"\"}],\n" +
-                "  \"achievements\":[{\"title\":\"\",\"year\":\"\",\"extraInformation\":\"\"}],\n" +
-                "  \"languages\":[{\"name\":\"\"}],\n" +
-                "  \"interests\":[{\"name\":\"\"}]\n" +
-                "}";
+                            "Return ONLY this JSON structure:\n" +
+                            "{\n" +
+                            "  \"personalInformation\": {\n" +
+                            "    \"fullName\":\"\", \"email\":\"\", \"phoneNumber\":\"\",\n" +
+                            "    \"location\":\"\", \"linkedIn\":\"\", \"gitHub\":\"\", \"portfolio\":\"\"\n" +
+                            "  },\n" +
+                            "  \"summary\":\"\",\n" +
+                            "  \"skills\":[{\"title\":\"Java\",\"level\":\"Advanced\"}],\n" +
+                            "  \"experience\":[{\n" +
+                            "    \"jobTitle\":\"\", \"company\":\"\", \"location\":\"\",\n" +
+                            "    \"duration\":\"\", \"responsibility\":\"\"\n" +
+                            "  }],\n" +
+                            "  \"education\":[{\n" +
+                            "    \"degree\":\"\", \"university\":\"\", \"location\":\"\", \"graduationYear\":\"\"\n" +
+                            "  }],\n" +
+                            "  \"certifications\":[{\"title\":\"\",\"issuingOrganization\":\"\",\"year\":\"\"}],\n" +
+                            "  \"projects\":[{\"title\":\"\",\"description\":\"\",\"technologiesUsed\":[],\"githubLink\":\"\"}],\n" +
+                            "  \"achievements\":[{\"title\":\"\",\"year\":\"\",\"extraInformation\":\"\"}],\n" +
+                            "  \"languages\":[{\"name\":\"\"}],\n" +
+                            "  \"interests\":[{\"name\":\"\"}]\n" +
+                            "}";
 
-            Map<String, Object> body = Map.of(
-                    "contents", List.of(Map.of("parts", List.of(Map.of("text", prompt))))
-            );
-
-            String response = callGemini(body);
-
-            Map<String, Object> root = mapper.readValue(response, Map.class);
-            List<?> candidates = (List<?>) root.get("candidates");
-            Map<?, ?> firstCandidate = (Map<?, ?>) candidates.get(0);
-            Map<?, ?> content = (Map<?, ?>) firstCandidate.get("content");
-            List<?> parts = (List<?>) content.get("parts");
-            String text = ((Map<?, ?>) parts.get(0)).get("text").toString()
-                    .replace("```json", "").replace("```", "").trim();
-
-            return mapper.readValue(text, Map.class);
+            String jsonText = aiRouter.execute(prompt, "/target-resume");
+            return mapper.readValue(jsonText, Map.class);
 
         } catch (Exception e) {
+            log.error("Failed to generate targeted resume via AI Router", e);
             return Map.of("error", e.getMessage());
         }
     }

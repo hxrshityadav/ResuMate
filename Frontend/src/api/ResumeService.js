@@ -1,48 +1,25 @@
-import axios from "axios";
+import { axiosClient } from "./axiosClient";
 
-const DEFAULT_PROD_BACKEND = "https://resumate-olive.up.railway.app";
-
-function normalizeBaseUrl(url) {
-    if (!url) return "";
-    return String(url).trim().replace(/\/+$/, "");
-}
-
-function isLocalhostUrl(url) {
-    try {
-        const u = new URL(url);
-        return u.hostname === "localhost" || u.hostname === "127.0.0.1";
-    } catch {
-        return false;
-    }
-}
-
-const envBase = normalizeBaseUrl(import.meta.env.VITE_BACKEND_URL);
-
-// Safety: if Vercel PROD is accidentally configured with localhost, fall back to Railway.
-export const baseURL =
-    import.meta.env.PROD && isLocalhostUrl(envBase)
-        ? DEFAULT_PROD_BACKEND
-        : (envBase || DEFAULT_PROD_BACKEND);
-
-export const axiosInstance = axios.create({
-    baseURL,
-    timeout: 30000,
-    headers: {
-        "Content-Type": "application/json"
-    }
-});
+export const axiosInstance = axiosClient;
 
 export const generateResume = async (description) => {
     try {
-        const response = await axiosInstance.post(
-            "/api/v1/resume/generate",
-            {
-                userDescription: description
-            }
-        );
+        const response = await axiosClient.post("/resume/generate", {
+            userDescription: description
+        });
+        return response;
+    } catch (error) {
+        throw error.response?.data || error.message;
+    }
+};
 
-        return response.data;
-
+export const enhanceResumeSection = async (sectionType, content) => {
+    try {
+        const response = await axiosClient.post("/resume/improve-section", {
+            sectionType,
+            content
+        });
+        return response;
     } catch (error) {
         throw error.response?.data || error.message;
     }
@@ -50,16 +27,11 @@ export const generateResume = async (description) => {
 
 export const checkAtsScore = async (resumeText, jobDescription = "") => {
     try {
-        const response = await axiosInstance.post(
-            "/api/v1/resume/ats-check",
-            {
-                resumeText,
-                jobDescription
-            }
-        );
-
-        return response.data;
-
+        const response = await axiosClient.post("/resume/ats-check", {
+            resumeText,
+            jobDescription
+        });
+        return response;
     } catch (error) {
         throw error.response?.data || error.message;
     }
