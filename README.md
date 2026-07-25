@@ -2,7 +2,7 @@
 
 # ✨ ResuMate
 
-### Enterprise-Grade AI Resume Builder & Career Accelerator (SaaS)
+### AI Resume Builder & Career Accelerator (SaaS)
 
 [![Java](https://img.shields.io/badge/Java-21_LTS-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://oracle.com/java)
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.4+-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
